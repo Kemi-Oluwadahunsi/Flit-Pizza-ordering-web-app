@@ -1,25 +1,39 @@
+
+
 "use client"
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Link from "next/link";
+import { CgMenu } from "react-icons/cg";
+import { FaTimes } from "react-icons/fa";
 
 const Navbar = () => {
+  const router = useRouter()
+  const [showMobileContent, setShowMobileContent] = useState(false);
+  const quantity = useSelector((state) => state.cart.quantity);
 
-  const quantity = useSelector(state => state.cart.quantity);
+  const toggleMobileContent = () => {
+    setShowMobileContent(!showMobileContent);
+  };
+
+  const navigateToCart = () => {
+    router.push("/cart");
+  };
 
   return (
     <>
-      <header className=" py-2   lg:px-8 h-28 lg:fixed grid bg-white lg:z-50  grid-cols-2 lg:grid-cols-5 w-full ">
+      <header className="py-2 lg:px-8 h-28 lg:fixed grid bg-white lg:z-50  grid-cols-2 lg:grid-cols-5 w-full ">
         <div className="lg:col-span-2 grid grid-cols-2">
           <Image
             src="/images/pizza-logo_afsvzn.png"
             alt="pizzon logo"
             width={80}
             height={10}
-            className="pt-1  pl-2 cursor-pointer  w-16 lg:w-24  h-14 lg:h-24"
+            className="pt-1 pl-2 cursor-pointer w-16 lg:w-24  h-14 lg:h-24"
           />
 
           <Image
@@ -27,37 +41,54 @@ const Navbar = () => {
             alt=""
             width={120}
             height={30}
-            className=" ml-4 lg:ml-2 lg:w-3/5 lg:h-24"
+            className="ml-4 lg:ml-2  lg:w-3/5 lg:h-24"
           />
         </div>
+        <div className="lg:hidden relative w-10 h-10 top-2 left-40 md:left-72 flex items-center">
+          <button
+            onClick={toggleMobileContent}
+            className="text-black underline text-3xl md:text-4xl"
+          >
+            {showMobileContent ? <FaTimes /> : <CgMenu />}
+          </button>
+        </div>
 
-        <div className="lg:col-span-3 flex flex-row ">
-          <ul className="hidden lg:flex flex-row w-full text-md justify-end   items-center text-black font-bold gap-12 ">
+        <div className="lg:col-span-3 flex w-screen  lg:w-full lg:flex-row ">
+          <ul
+            className={`${
+              showMobileContent ? "flex" : "hidden"
+            }  lg:flex flex-col lg:flex-row lg:mt-0 fixed lg:relative py-4 lg:py-0 z-50 lg:z-0 w-screen lg:w-full text-md md:text-lg lg:text-md bg-red-600 lg:bg-transparent justify-end items-center text-white lg:text-black font-bold gap-14 `}
+          >
             <Link href="/" passHref>
               <li className="cursor-pointer"> HOME</li>
             </Link>
             <Link href="../products" passHref>
               <li className="cursor-pointer"> PRODUCTS</li>
             </Link>
-            <Link href = "#" passHref>
+            <Link href="#" passHref>
               <li className="cursor-pointer"> PAGES</li>
             </Link>
-            <Link href ="#" passHref>
-            <li className="cursor-pointer">BLOG</li>
+            <Link href="#" passHref>
+              <li className="cursor-pointer">BLOG</li>
             </Link>
-            <Link href = "#" passHref>
-            <li className="cursor-pointer">CONTACTS</li>
+            <Link href="#" passHref>
+              <li className="cursor-pointer">CONTACTS</li>
             </Link>
-            <FaSearch className=" cursor-pointer mr-7 text-black" />
+            <FaSearch className=" hidden lg:block cursor-pointer  lg:mr-14 text-black" />
           </ul>
-          <Link href="../cart" passHref>
-            <div className=" flex flex-row pt-6 relative  flex-grow  lg:pt-8 lg:items-center  lg:right-5 ml-64 lg:ml-2">
-              <FaCartShopping className="text-blue-500 absolute cursor-pointer text-xl lg:text-3xl top-7 " />
-              <span className=" absolute   top-5 md:top-5 -right-7 lg:-right-9 lg:top-5  text-xs lg:text-sm   text-white bg-red-600 rounded-full px-1">
-                {quantity}
-              </span>
-            </div>
-          </Link>
+
+          <div
+            onClick={navigateToCart}
+            className="flex  flex-row  absolute flex-grow items-end lg:pt-8 lg:items-center right-16 lg:right-5  top-4 lg:top-2 md:mr-10 lg:mr-5  md:ml-96 lg:ml-4"
+          >
+            <FaCartShopping className="text-blue-500 cursor-pointer text-xl md:text-2xl  ml-2 lg:text-3xl" />
+            <span
+              id="wotowoto"
+              className=" cursor-pointer mb-4 lg:mb-0 lg:-mt-10 -ml-2 text-xs  md:text-sm   text-white bg-red-600 rounded-full px-1"
+            >
+              {quantity}
+            </span>
+          </div>
         </div>
       </header>
     </>

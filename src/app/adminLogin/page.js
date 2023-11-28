@@ -10,12 +10,13 @@ const Login = () => {
     const [username, setUsername] = useState(null)
     const [password, setPassword] = useState(null)
     const [error, setError] = useState(false);
-    const router = useRouter()
+    const router = useRouter();
 
     const handleClick = async () => {
+      
       try{
-        await axios.post("http://localhost:3000/adminCookie", {username, password})
-        router.push("/adminManagePage")
+        // await axios.post("http://localhost:3000/adminCookie", {username, password});
+            router.push("/adminManagePage");
       }catch (err){
         setError(true)
       }

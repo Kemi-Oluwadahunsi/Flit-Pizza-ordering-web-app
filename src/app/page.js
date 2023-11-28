@@ -16,8 +16,20 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useMediaQuery } from "react-responsive";
 
-export default function Home() {
+import React from "react";
+import axios from "axios";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./products/newItem.module.css";
+
+export default function Products({ setClose }) {
   const isMobile = useMediaQuery({ maxWidth: 480 });
+  const [file, setFile] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [prices, setPrices] = useState([]);
+  const [extra, setExtra] = useState(null);
+  const [options, setOptions] = useState([]);
 
   const carouselSettings = {
     dots: true,
@@ -49,21 +61,22 @@ export default function Home() {
     </div>
   ));
 
+
   return (
     <>
       <main className="grid grid-rows-2 lg:grid-cols-5 lg:mt-0 justify-items-center lg:h-mainHeight  lg:pt-36">
         <div className="lg:col-span-3 px-4 lg:pl-10  flex items-center lg:items-start">
           <div className=" h-3/4 flex flex-col items-center lg:items-start  gap-2 lg:gap-5  lg:mt-52">
-            <h1 className="font-extrabold text-center text-slate-900 weight  text-4xl lg:text-7xl">
+            <h1 className="font-extrabold text-center text-slate-900 weight mr-10 lg:mr-0 text-4xl md:text-5xl lg:text-7xl">
               Handmade,
             </h1>
-            <h1 className=" w-3/4 font-extrabold text-center  lg:text-start text-slate-900 weight  text-4xl lg:text-7xl">
+            <h1 className=" w-3/4 font-extrabold text-center  lg:text-start text-slate-900 weight  text-4xl md:text-5xl lg:text-7xl">
               With an Extra
             </h1>
-            <h1 className=" w-3/4 font-extrabold text-center lg:text-start text-slate-900 weight  text-4xl lg:text-7xl">
+            <h1 className=" w-3/4 font-extrabold text-center lg:text-start text-slate-900 weight  text-4xl md:text-5xl lg:text-7xl">
               Pinch of <span className="love">Love</span>
             </h1>
-            <h4 className="lg:text-3xl mt-2 lg:mt-0  text-center lg:w-3/4 lg:text-start lg:leading-10 space-x-4 [word-spacing:5px] font-medium text-gray-800">
+            <h4 className="lg:text-3xl mt-2 lg:mt-0  text-center  md:w-4/5 lg:w-3/4 lg:text-start lg:leading-10 space-x-4 [word-spacing:5px] font-medium text-gray-800">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
             </h4>
@@ -134,11 +147,10 @@ export default function Home() {
             alt=""
             width={100}
             height={50}
-            className="relative -mt-72 mr-10 "
+            className="relative -mt-72 lg:mt-0 mr-10 "
           />
         </div>
       </section>
-
       <section className=" px-4 lg:px-10 -mt-10 lg:mt-20 ">
         <h4 className="love font-bold text-xl lg:text-2xl pb-1 lg:pb-4">
           Popular Dishes
@@ -147,12 +159,11 @@ export default function Home() {
           Browse our Menu
         </h2>
 
-        <div className=" mt-7 lg:mt-10 grid  grid-rows-1  lg:px-6 lg:grid-cols-3 gap-6 lg:gap-16">
+        <div className=" mt-7 lg:mt-10 grid grid-rows-1 md:grid-cols-2  md:w-11/12  lg:w-full md:mx-auto lg:mx-0 lg:px-6 lg:grid-cols-3 gap-6 md:gap-5 lg:gap-16">
           {Cadd}
         </div>
       </section>
-
-      <section className="  py-10 lg:py-20 px-4 lg:px-10 bg-yellow-50 lg:mt-16 h-3/4 ">
+      <section className=" py-10 lg:py-20 px-4 lg:px-10 bg-yellow-50 lg:mt-16 h-3/4 ">
         <h4 className="love font-bold lg:mb-5 text-xl lg:text-2xl">
           Our Strength
         </h4>
@@ -167,7 +178,7 @@ export default function Home() {
           className="absolute right-0  mtop hidden lg:block :mb-20"
         />
 
-        <section className=" mt-10 lg:mt-16 grid lg:grid-cols-4 gap-8">
+        <section className=" mt-10 lg:mt-16 grid  md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="flex flex-col gap-4">
             <BiBowlRice className="text-5xl text-red-400" />
             <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
@@ -205,7 +216,6 @@ export default function Home() {
           </div>
         </section>
       </section>
-
       <section className="px-4 lg:px-10  mt-10 lg:mt-28">
         <Image src="/images/leaf.png" alt="" width="100" height="100" />
 
@@ -221,8 +231,7 @@ export default function Home() {
             <Slider {...carouselSettings}>{Feedback}</Slider>
           </div>
         ) : (
-          <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2 lg:grid-cols-4 gap-4 lg:gap-8">
-            {/* Render individual testimonials for larger screens */}
+          <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
             {Feedback}
           </div>
         )}

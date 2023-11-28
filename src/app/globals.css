@@ -72,7 +72,7 @@ body {
 }
 
 .onionTop{
-  top: 39rem;
+  top: 42rem;
   right : 41rem;
 }
 
@@ -92,13 +92,8 @@ body {
   width: 70%;
 }
 
-.uploadNewBackground{
-  background: rgba(238, 233, 233, 0.5);
+.heighto {
+  height:50rem;
 }
-.index{
-    z-index: 9999;
-    position: relative;
-    height: 100vh;
-    padding: 1rem 1rem;
-    margin-top: 1rem;
-}
+
+

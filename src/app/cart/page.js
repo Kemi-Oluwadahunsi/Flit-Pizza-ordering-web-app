@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 // import axios from "axios";
-// import { reset } from "../redux/cartSlice/page";
+import { reset } from "../redux/cartSlice/page";
 
 
 
@@ -26,22 +26,20 @@ const Page = () => {
   const router = useRouter();
 
 
-  // const createOrder = async (data) => {
-  //   try {
-  //     const res = await axios.post("http://localhost:3000/api/orders", data);
-  //     if (res.status === 201) {
-  //       dispatch(reset());
-  //       router.push(`/orders/${res.data._id}`);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const createOrder = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/orders", data);
+      if (res.status === 201) {
+        dispatch(reset());
+        router.push(`/orders/${res.data._id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   // Custom component to wrap the PayPalButtons and handle currency changes
   const ButtonWrapper = ({ currency, showSpinner }) => {
-    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-    // This is the main reason to wrap the PayPalButtons in a new component
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
     useEffect(() => {
@@ -75,20 +73,12 @@ const Page = () => {
                 ],
               })
               .then((orderId) => {
-                // Your code here after create the order
                 return orderId;
               });
           }}
           onApprove= {(data, actions) => {
             return actions.order.capture().then(function (details) {
               router.push("/orders");
-              // const shipping = details.purchase_units[0].shipping;
-              // createOrder({
-              //   customer: shipping.name.full_name,
-              //   address: shipping.address.address_line_1,
-              //   total: cart.total,
-              //   method: 1,
-              // });
             });
           }}
         />
@@ -97,7 +87,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex pageMargin flex-col h-screen lg:flex-row mx-auto lg:m-0">
+    <div className="flex pageMargin  heighto flex-col lg:flex-row mx-auto lg:m-0">
       <div className="hidden lg:table flex-grow h-36 pt-6 w-5/12">
         <table className="w-full">
           <thead className="">
@@ -123,6 +113,7 @@ const Page = () => {
                       src={product.img}
                       width={100}
                       height={100}
+                      alt=""
                       className="ml-10"
                     />
                   </div>
@@ -159,7 +150,7 @@ const Page = () => {
           </tbody>
         </table>
       </div>
-      <div className="lg:hidden  flex align-middle justify-center flex-1 w-screen leading-7">
+      <div className="lg:hidden flex align-middle justify-center flex-1 w-screen leading-7">
         <table className="flex flex-col -m-12">
           {cart.products.map((product) => (
             <tr
@@ -172,13 +163,14 @@ const Page = () => {
                     src={product.img}
                     width={100}
                     height={100}
-                    className="w-44"
+                    alt=""
+                    className="w-44 md:w-60"
                   />
                 </div>
               </td>
 
               <td>
-                <span className="">Pizza Type: {product.name}</span>
+                <span className="md:text-2xl">Pizza Type: {product.name}</span>
               </td>
 
               <td>
@@ -191,15 +183,15 @@ const Page = () => {
               </td>
 
               <td>
-                <span>Price: ${product.price}</span>
+                <span className="md:text-xl">Price: ${product.price}</span>
               </td>
 
               <td>
-                <span>Quantity: {product.quantity}</span>
+                <span className="md:text-xl">Quantity: {product.quantity}</span>
               </td>
 
               <td>
-                <span className="font-bold">
+                <span className=" md:text-xl font-bold">
                   Total: ${product.price * product.quantity}
                 </span>
               </td>
@@ -209,7 +201,7 @@ const Page = () => {
       </div>
 
       <div className="flex flex-1 justify-center pb-14 mt-7">
-        <div className="flex flex-col w-7/12 lg:w-11/12 max-h-80 text-white bg-slate-800 p-5">
+        <div className="flex flex-col w-7/12 md:w-2/4 lg:w-11/12 max-h-80 text-white bg-slate-800 p-5">
           <h2 className="font-extrabold text-xl mb-7 pt-5">CART TOTAL</h2>
           <div className="">
             <b className="mr-5">Subtotal:</b>${cart.total}
@@ -244,7 +236,7 @@ const Page = () => {
           ) : (
             <button
               onClick={() => setOpen(true)}
-              className="mt-10 bg-yellow-500 py-2 lg:w-60 rounded-3xl font-extrabold lg:text-xl cursor-pointer "
+              className="mt-10 bg-yellow-500 py-2  md:py-3 w-44 md:w-72 lg:w-96  mx-auto rounded-3xl font-extrabold lg:text-xl cursor-pointer "
             >
               CHECKOUT NOW!
             </button>

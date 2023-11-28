@@ -18,8 +18,8 @@ const Order = () => {
   return (
     <>
       <div className=" flex-col-reverse  lg:flex-row flex pageMargin">
-        <div className="flex  flex-grow flex-wrap w-2/5 text-left">
-          <div className=" w-full ml-7 pt-7">
+        <div className=" pt-4 lg:pt-0 flex flex-col lg:flex-row lg:flex-grow lg:flex-wrap lg:w-2/5 text-left">
+          <div className="hidden lg:flex w-full ml-7 pt-7">
             <table className="w-full">
               <tr className="text-md">
                 <th className=" w-2/4">Order ID</th>
@@ -47,13 +47,33 @@ const Order = () => {
               </tr>
             </table>
           </div>
-          <div className="flex justify-around w-full">
+          <div className="lg:hidden ">
+            <tr className="flex flex-col h-44 leading-10 ml-10">
+              <td>
+                <span className="text-lg">Order ID: 1238119489144</span>
+              </td>
+
+              <td>
+                <span>Customer: 08173635263</span>
+              </td>
+
+              <td>
+                <span>Address: 10, John Street</span>
+              </td>
+
+              <td>
+                <span className="">Total: ${cart.total}</span>
+              </td>
+            </tr>
+          </div>
+          <div className="flex justify-around lg:justify-between align-middle md:pb-4 lg:pb-0 lg:mt-5 w-5/6 ml-10">
             <div className={statusClass(0)}>
               <Image
                 src="/images/payment.svg"
                 width={70}
                 height={70}
                 className=""
+                alt="paid"
               />
               <span>Payment</span>
               <div className="">
@@ -66,6 +86,7 @@ const Order = () => {
                 src="/images/preparing.png"
                 width={70}
                 height={70}
+                alt="preparing"
                 className=""
               />
               <span>Preparing</span>
@@ -79,6 +100,7 @@ const Order = () => {
                 src="/images/bike-delivery.png"
                 width={70}
                 height={70}
+                alt="on the way"
                 className=""
               />
               <span>On the way</span>
@@ -92,6 +114,7 @@ const Order = () => {
                 src="/images/on-the-way.svg"
                 width={70}
                 height={70}
+                alt="deliveredtell"
                 className=""
               />
               <span>Delivered</span>
@@ -102,8 +125,8 @@ const Order = () => {
           </div>
         </div>
 
-        <div className="flex flex-1 ml-5">
-          <div className="flex flex-col w-11/12 max-h-80 text-white bg-slate-800 p-12  ">
+        <div className="flex flex-1 lg:ml-5 justify-center">
+          <div className="flex flex-col w-3/4 md:w-7/12  lg:w-11/12 max-h-80 text-white bg-slate-800 p-12  ">
             <h2 className="font-extrabold text-2xl mb-7">CART TOTAL</h2>
             <div className="">
               <b className="mr-5">Subtotal:</b>${cart.total}

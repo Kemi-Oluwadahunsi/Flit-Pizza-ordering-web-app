@@ -1,6 +1,6 @@
 "use client"
 import { addProduct } from "@/app/redux/cartSlice/page";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -79,21 +79,21 @@ const ProductPage = () => {
           </div>
         </section>
         <section className=" -mt-10  lg:pt-3 text-center lg:text-start lg:w-2/4">
-          <h1 className="font-extrabold text-2xl lg:text-4xl">{pizza1.name}</h1>
+          <h1 className="font-extrabold text-2xl md:text-3xl  lg:text-4xl">{pizza1.name}</h1>
 
-          <span className="font-bold text-xl text-red-500 mt-5 block ">
+          <span className="font-bold text-xl md:text-2xl lg:text-xl text-red-500 mt-5 block ">
             ${price}
           </span>
 
-          <p className=" lg:text-lg mt-2">{pizza1.desc}</p>
+          <p className=" md:text-2xl lg:text-lg mt-2">{pizza1.desc}</p>
 
-          <p className=" lg:text-lg mt-2 lg:mt-5">
+          <p className="  md:text-2xl lg:text-lg mt-2 lg:mt-5">
             Category: {pizza1.category}
           </p>
 
-          <p className=" lg:text-lg mt-2 lg:mt-5">Tags: {pizza1.tags} </p>
+          <p className=" md:text-2xl lg:text-lg mt-2 lg:mt-5">Tags: {pizza1.tags} </p>
 
-          <h3 className="font-bold text-xl lg:text-2xl mt-8 lg:mt-16">
+          <h3 className="font-bold text-xl md:text-2xl mt-8 lg:mt-16">
             Choose Pizza Size
           </h3>
 
@@ -146,7 +146,7 @@ const ProductPage = () => {
               />
             </div>
           </div>
-          <h3 className="">Choose additional ingredients</h3>
+          <h3 className="md:text-xl">Choose additional ingredients</h3>
           <div className="ing">
             {pizza1.options.map((option) => (
               <div
@@ -170,15 +170,15 @@ const ProductPage = () => {
               onChange={(e) => setQuantity(e.target.value)}
               type="number"
               defaultValue={1}
-              className="mx-auto lg:h-12 border border-1 border-gray-500 pl-2"
+              className="mx-auto  md:h-8 lg:h-12 border border-1 border-gray-500 pl-2"
             />
               <button
-                className="block lg:inline h-9 lg:h-12 w-32 lg:w-48 ml-7 mt-10 lg:mt-0 bg-yellow-500 text-white font-bold text-sm lg:text-xl rounded-3xl"
+                className="block lg:inline  h-9 lg:h-12 w-32 md:w-40 lg:w-48 mx-auto lg:ml-7 my-4 lg:mt-0 bg-yellow-500 text-white font-bold text-sm  md:text-xl rounded-3xl"
                 onClick={handleClick}
               >
                 ADD TO CART
               </button>
-              <button className="block lg:inline border border-gray-400 w-10 lg:w-20 h-10 lg:h-20 lg:ml-7 rounded-full lg:text-center mx-auto lg:mx-0 ">
+              <button className="block lg:inline border border-gray-400 w-10  md:w-14 lg:w-20 h-10 md:h-14 lg:h-20 lg:ml-7 rounded-full lg:text-center mx-auto lg:mx-0 ">
                 <Image
                   src="/images/heart-click.svg"
                   alt="like button"
