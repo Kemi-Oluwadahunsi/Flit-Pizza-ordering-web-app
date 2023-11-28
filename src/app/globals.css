@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -24,4 +24,81 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+} */
+
+*{
+  box-sizing: border-box;
+}
+
+
+.pizza-background{
+  width: 26rem;
+  height: 48rem;
+ 
+}
+
+.love{
+  color:red
+}
+
+.topImage {
+  top: 11rem;
+}
+
+.text-font{
+  font-size: 2.44rem;
+}
+
+.margin-top{
+  margin-top : 14rem;
+}
+
+.topp{
+  margin-top:50rem;
+  margin-right: -10;
+}
+
+.mtop{
+  margin-top: -6rem;
+}
+
+.pizza2-position{
+  top: 25rem;
+}
+
+.pizza2-position{
+  top: 41rem;
+  right: 14rem;
+}
+
+.onionTop{
+  top: 39rem;
+  right : 41rem;
+}
+
+.weight{
+  line-height: 1.2;
+}
+
+.pageMargin{
+  padding-top: 10%;
+}
+
+.pizzaFresh{
+  margin-top: 8rem;
+}
+
+.loremWidth{
+  width: 70%;
+}
+
+.uploadNewBackground{
+  background: rgba(238, 233, 233, 0.5);
+}
+.index{
+    z-index: 9999;
+    position: relative;
+    height: 100vh;
+    padding: 1rem 1rem;
+    margin-top: 1rem;
 }

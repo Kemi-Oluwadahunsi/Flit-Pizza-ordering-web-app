@@ -1,0 +1,44 @@
+.file{
+    border: 1px solid rgb(202, 202, 202);
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.label{
+    font-size: 1rem;
+    margin-top: 1.5rem;
+}
+
+.extra{
+    display: flex;
+    flex-direction: column;
+}
+
+.input{
+    border: 1px solid rgb(209,213,219);
+    width: 100%;
+    border-radius: 8px;
+    margin-top: .5rem;
+    height: 40px;
+    padding-left: 1rem;
+}
+
+.closeButton{
+    background: gray;
+    width: 15%;
+    font-size: 1rem;
+    color: white;
+    padding: .5rem;
+    border-radius: 5px;
+}
+
+.addButton{
+    background: rgb(62, 62, 253);
+    width: 25%;
+    font-size: 1rem;
+    color: white;
+    padding: .5rem;
+    border-radius: 5px;
+}
