@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import axios from "axios";
 // import { useRouter } from "next/navigation";
 import styles from "../products/newItem.module.css";
 
-export default function Products({ setClose }) {
+export default function Products() {
   const [isAddNewPopupVisible, setIsAddNewPopupVisible] = useState(false);
 
   const toggleAddNewPopup = () => {
