@@ -1,86 +1,84 @@
-"use client"
+"use client";
 import { useState } from "react";
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
+import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 // import { FaFilter} from "react-icons/fa6";
 import { IoFilter } from "react-icons/io5";
-import  Cards from '../Specials'
-import  CardArray from '../MenuArray.jsx'
+import Cards from "../Specials";
+import CardArray from "../MenuArray.jsx";
 import axios from "axios";
 // import { useRouter } from "next/navigation";
 import styles from "../products/newItem.module.css";
 
+export default function Products({ setClose }) {
+  const [isAddNewPopupVisible, setIsAddNewPopupVisible] = useState(false);
 
+  const toggleAddNewPopup = () => {
+    setIsAddNewPopupVisible(!isAddNewPopupVisible);
+  };
 
-export default function Products({setClose}) {
-   const [isAddNewPopupVisible, setIsAddNewPopupVisible] = useState(false);
+  const [file, setFile] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [prices, setPrices] = useState([]);
+  const [extra, setExtra] = useState(null);
+  const [options, setOptions] = useState([]);
 
-   const toggleAddNewPopup = () => {
-     setIsAddNewPopupVisible(!isAddNewPopupVisible);
-   };
+  const handleExtraInput = () => {
+    setExtra({ ...extra, [e.target.name]: e.target.value });
+  };
 
-    const [file, setFile] = useState(null);
-    const [title, setTitle] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [prices, setPrices] = useState([]);
-    const [extra, setExtra] = useState(null);
-    const [options, setOptions] = useState([]);
+  const handleExtra = () => {
+    setOptions((prev) => [...prev, options]);
+  };
 
-    const handleExtraInput = () => {
-      setExtra({ ...extra, [e.target.name]: e.target.value });
-    };
+  const changePrice = (e, index) => {
+    const currentPrices = prices;
+    currentPrices[index] = e.target.value;
+    setPrices(currentPrices);
+  };
 
-    const handleExtra = () => {
-      setOptions((prev) => [...prev, options]);
-    };
+  const handleCreate = async () => {
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "uploads");
 
-    const changePrice = (e, index) => {
-      const currentPrices = prices;
-      currentPrices[index] = e.target.value;
-      setPrices(currentPrices);
-    };
-
-    const handleCreate = async () => {
-      const data = new FormData();
-      data.append("file", file);
-      data.append("upload_preset", "uploads");
-
-      try {
-        const uploadRes = await axios.post(
-          "https://api.cloudinary.com/v1_1/dee9teadk/image/upload",
-          data,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        const { url } = uploadRes.data;
-        const newProduct = {
-          title,
-          description,
-          prices,
-          extra,
-          img: url,
-        };
-        await axios.post("http://localhost:3000/products", newProduct);
-        //   setClose(true);
-      } catch (err) {
-        console.error("Error uploading to Cloudinary:", err);
-        console.log("Cloudinary response:", err.response);
-      }
-    };
+    try {
+      const uploadRes = await axios.post(
+        "https://api.cloudinary.com/v1_1/dee9teadk/image/upload",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const { url } = uploadRes.data;
+      const newProduct = {
+        title,
+        description,
+        prices,
+        extra,
+        img: url,
+      };
+      await axios.post("http://localhost:3000/products", newProduct);
+      //   setClose(true);
+    } catch (err) {
+      console.error("Error uploading to Cloudinary:", err);
+      console.log("Cloudinary response:", err.response);
+    }
+  };
 
   const Cadd = CardArray.map((item) => (
     <Link key={item.id} href={`/products/1`}>
-        <Cards
-          id={item.id}
-          img={item.img}
-          menu={item.menu}
-          price={item.price}
-          description={item.description}
-        />
+      <Cards
+        id={item.id}
+        img={item.img}
+        menu={item.menu}
+        price={item.price}
+        description={item.description}
+      />
     </Link>
   ));
   return (
@@ -120,7 +118,7 @@ export default function Products({setClose}) {
           <div>
             <button
               onClick={toggleAddNewPopup}
-              className="bg-teal-600 text-sm md:text-lg text-white text-center px-3 lg:px-2  gap-0 py-2 lg:py-3 items-center mt-4 rounded-3xl lg:w-40 cursor-pointer lg:hover:bg-white lg:hover:text-black"
+              className="bg-teal-600 text-sm md:text-xl text-white text-center px-3 lg:px-3  gap-0 py-2 lg:py-3 items-center mt-4 rounded-3xl lg:w-44 cursor-pointer lg:hover:bg-white lg:hover:text-black"
             >
               Add New Pizza
             </button>
@@ -257,7 +255,7 @@ export default function Products({setClose}) {
 
       <div className="flex justify-end ">
         <Link href="/adminLogin" passHref>
-          <button className=" m-4 border-2 border-teal-600 w-28 text-teal-600 py-1 px-2 rounded-3xl">
+          <button className=" m-4 border-2 border-teal-600 w-24 md:w-28 text-xs md:text-sm text-teal-600 py-1 px-2 rounded-3xl">
             Admin Login
           </button>
         </Link>

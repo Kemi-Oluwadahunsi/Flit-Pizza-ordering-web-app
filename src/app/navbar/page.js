@@ -33,15 +33,15 @@ const Navbar = () => {
             alt="pizzon logo"
             width={80}
             height={10}
-            className="pt-1 pl-2 cursor-pointer w-16 lg:w-24  h-14 lg:h-24"
+            className="pt-2 pl-2 cursor-pointer w-16 lg:w-24  h-14 lg:h-28"
           />
 
           <Image
             src="/images/pizza-header.png"
             alt=""
-            width={120}
+            width={140}
             height={30}
-            className="ml-4 lg:ml-2  lg:w-3/5 lg:h-24"
+            className="ml-4 lg:ml-2  lg:w-4/6 lg:h-28"
           />
         </div>
         <div className="lg:hidden relative w-10 h-10 top-2 left-40 md:left-72 flex items-center">
@@ -53,11 +53,11 @@ const Navbar = () => {
           </button>
         </div>
 
-        <div className="lg:col-span-3 flex w-screen  lg:w-full lg:flex-row ">
+        <div className="lg:col-span-3 flex w-screen lg:w-full lg:flex-row ">
           <ul
             className={`${
               showMobileContent ? "flex" : "hidden"
-            }  lg:flex flex-col lg:flex-row lg:mt-0 fixed lg:relative py-4 lg:py-0 z-50 lg:z-0 w-screen lg:w-full text-md md:text-lg lg:text-md bg-red-600 lg:bg-transparent justify-end items-center text-white lg:text-black font-bold gap-14 `}
+            }  lg:flex flex-col lg:flex-row lg:mt-0 fixed lg:relative py-4 lg:py-0 z-50 lg:z-0 w-screen lg:w-full text-md md:text-lg lg:text-sm bg-red-600 lg:bg-transparent justify-end items-center text-white lg:text-black font-bold gap-14 `}
           >
             <Link href="/" passHref>
               <li className="cursor-pointer"> HOME</li>
@@ -84,7 +84,7 @@ const Navbar = () => {
             <FaCartShopping className="text-blue-500 cursor-pointer text-xl md:text-2xl  ml-2 lg:text-3xl" />
             <span
               id="wotowoto"
-              className=" cursor-pointer mb-4 lg:mb-0 lg:-mt-10 -ml-2 text-xs  md:text-sm   text-white bg-red-600 rounded-full px-1"
+              className=" cursor-pointer mb-4 lg:mb-0 lg:-mt-10 -ml-2 text-xs  md:text-sm   text-white bg-red-600 rounded-full px-1 y-1"
             >
               {quantity}
             </span>

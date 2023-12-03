@@ -6,7 +6,7 @@ import { FaCartShopping , FaStar} from "react-icons/fa6";
 const Specials = (props) => {
     return (
         <>
-            <div className=' border-2 border-gray-300 rounded-lg font-medium  cursor-pointer ' >
+            <div className=' border-2 border-gray-300 rounded-lg font-medium  cursor-pointer bg-red-400' >
                 <a href={props.linked} target="_blank" rel="noopener noreferrer">
 
                     <section className='bg-white grid  lg:grid-rows-2  rounded-lg'>

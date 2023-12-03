@@ -12,18 +12,23 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 // import axios from "axios";
 import { reset } from "../redux/cartSlice/page";
+import styles from './cash.module.css'
 
 
 
 const Page = () => {
    const cart = useSelector((state) => state.cart);
   const [open, setOpen] = useState(false)
-  // const [cash, setCash] = useState(false);
+  const [isCashOnDeliveryVisible, setIsCashOnDeliveryVisible] = useState(false);
   const amount = cart.total;
   const currency = "USD"
   const style = { layout: "vertical" };
   const dispatch = useDispatch();
   const router = useRouter();
+
+  const toggleCashOnDelivery = () => {
+    setIsCashOnDeliveryVisible(!isCashOnDeliveryVisible);
+  };
 
 
   const createOrder = async (data) => {
@@ -86,9 +91,13 @@ const Page = () => {
     );
   };
 
+  const cashOrder = () => {
+    return router.push("/orders")
+  }
+
   return (
-    <div className="flex pageMargin  heighto flex-col lg:flex-row mx-auto lg:m-0">
-      <div className="hidden lg:table flex-grow h-36 pt-6 w-5/12">
+    <div className="flex pageMargin flex-col lg:flex-row mx-auto lg:m-0">
+      <div className="hidden lg:table flex-grow h-36 pt-6 w-5/10">
         <table className="w-full">
           <thead className="">
             <tr className="text-md ">
@@ -200,8 +209,8 @@ const Page = () => {
         </table>
       </div>
 
-      <div className="flex flex-1 justify-center pb-14 mt-7">
-        <div className="flex flex-col w-7/12 md:w-2/4 lg:w-11/12 max-h-80 text-white bg-slate-800 p-5">
+      <div className="flex flex-1 justify-center mt-7">
+        <div className="flex flex-col w-7/12 md:w-2/4 lg:w-2/3 max-h-80 text-white bg-slate-800 p-5">
           <h2 className="font-extrabold text-xl mb-7 pt-5">CART TOTAL</h2>
           <div className="">
             <b className="mr-5">Subtotal:</b>${cart.total}
@@ -217,9 +226,67 @@ const Page = () => {
 
           {open ? (
             <div className="flex flex-col  mt-7">
-              <button className="bg-white text-teal-800 font-semibold text-md mb-3 py-1 cursor-pointer">
+              <button
+                onClick={toggleCashOnDelivery}
+                className="bg-white text-teal-800 font-semibold text-md mb-3 py-1 cursor-pointer"
+              >
                 CASH ON DELIVERY
               </button>
+
+              {isCashOnDeliveryVisible && (
+                <div
+                  className={` flex flex-col place-items-center h-full bg-gray-300 ${styles.cashOnDelivery}`}
+                >
+                  <div
+                    className={` w-3/4 lg:w-2/6 bg-white  h-3/4 lg:h-full p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl  ${styles.index}`}
+                  >
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl text-black font-bold mb-5">
+                      You will pay $12 on delivery.
+                    </h1>
+                    <div className="flex flex-col gap-3">
+                      <label className="text-sm md:text-lg text-black">
+                        Name Surname
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="John Doe"
+                        name="name"
+                        className="border-2 border-gray-400 rounded-md text-sm lg:text-base"
+                      ></input>
+
+                      <label className="text-sm md:text-lg text-black">
+                        Phone Number
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="+234 708 73627"
+                        name="number"
+                        className="border-2 border-gray-400 rounded-md text-sm lg:text-base"
+                      ></input>
+
+                      <label className="text-sm md:text-lg text-black">
+                        Address
+                      </label>
+                      <textarea
+                        typeof="text"
+                        placeholder="10 John street"
+                        rows={10}
+                        type="text"
+                        className="border-2 border-gray-400 rounded-md h-24 md:h-32 text-sm lg:text-base"
+                      ></textarea>
+                    </div>
+
+                    <div className=" mt-5 flex justify-center ">
+                      <button
+                        onClick={cashOrder}
+                        className=" bg-yellow-500 w-20 lg:w-28 text-black text-sm lg:text-lg border-2 border-black p-2 rounded-2xl"
+                      >
+                        Order
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <PayPalScriptProvider
                 options={{
@@ -236,16 +303,13 @@ const Page = () => {
           ) : (
             <button
               onClick={() => setOpen(true)}
-              className="mt-10 bg-yellow-500 py-2  md:py-3 w-44 md:w-72 lg:w-96  mx-auto rounded-3xl font-extrabold lg:text-xl cursor-pointer "
+              className="mt-10 bg-yellow-500 py-2  md:py-3 w-44 md:w-72 lg:w-80  mx-auto rounded-3xl font-extrabold lg:text-xl cursor-pointer "
             >
               CHECKOUT NOW!
             </button>
           )}
         </div>
       </div>
-      {/* {cash && (
-        <orderDetails total={cart.total} createOrder = {createOrder} />
-      )} */}
     </div>
   );
 }

@@ -67,17 +67,17 @@ const Order = () => {
             </tr>
           </div>
           <div className="flex justify-around lg:justify-between align-middle md:pb-4 lg:pb-0 lg:mt-5 w-5/6 ml-10">
-            <div className={statusClass(0)}>
+            <div className={`${statusClass(0)}`}>
               <Image
                 src="/images/payment.svg"
                 width={70}
                 height={70}
-                className=""
+                className=" w-10 h-10 lg:w-20 lg:h-20"
                 alt="paid"
               />
-              <span>Payment</span>
-              <div className="">
-                <FaCircleCheck className="checkedIcon text-green-700 text-4xl" />
+              <span className="block text-sm lg:text-base pt-3">Payment</span>
+              <div className="pt-1">
+                <FaCircleCheck className="checkedIcon text-green-700 text-2xl lg:text-4xl" />
               </div>
             </div>
 
@@ -87,11 +87,11 @@ const Order = () => {
                 width={70}
                 height={70}
                 alt="preparing"
-                className=""
+                className="w-10 h-10 lg:w-20 lg:h-20"
               />
-              <span>Preparing</span>
-              <div className="">
-                <FaCircleCheck className="checkedIcon text-green-700 text-4xl" />
+              <span className="block text-sm lg:text-base pt-3">Preparing</span>
+              <div className="pt-1">
+                <FaCircleCheck className="checkedIcon text-green-700 text-2xl lg:text-4xl" />
               </div>
             </div>
 
@@ -101,11 +101,13 @@ const Order = () => {
                 width={70}
                 height={70}
                 alt="on the way"
-                className=""
+                className="w-10 h-10 lg:w-20 lg:h-20"
               />
-              <span>On the way</span>
-              <div className="">
-                <FaCircleCheck className="checkedIcon text-green-700 text-4xl" />
+              <span className="block text-sm lg:text-base pt-3">
+                On the way
+              </span>
+              <div className="pt-1">
+                <FaCircleCheck className="checkedIcon text-green-700 text-2xl lg:text-4xl" />
               </div>
             </div>
 
@@ -114,19 +116,19 @@ const Order = () => {
                 src="/images/on-the-way.svg"
                 width={70}
                 height={70}
-                alt="deliveredtell"
-                className=""
+                alt="delivered"
+                className="w-10 h-10 lg:w-20 lg:h-20"
               />
-              <span>Delivered</span>
-              <div className="">
-                <FaCircleCheck className="checkedIcon text-green-700 text-4xl" />
+              <span className="block text-sm lg:text-base pt-3">Delivered</span>
+              <div className="pt-1">
+                <FaCircleCheck className="checkedIcon text-green-700 text-2xl lg:text-4xl" />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-1 lg:ml-5 justify-center">
-          <div className="flex flex-col w-3/4 md:w-7/12  lg:w-11/12 max-h-80 text-white bg-slate-800 p-12  ">
+        <div className="flex flex-1 lg:ml-2 ">
+          <div className="flex flex-col w-3/4 md:w-3/5 lg:w-10/12 max-h-80 text-white bg-slate-800 p-12 mx-auto lg:mx-0">
             <h2 className="font-extrabold text-2xl mb-7">CART TOTAL</h2>
             <div className="">
               <b className="mr-5">Subtotal:</b>${cart.total}
