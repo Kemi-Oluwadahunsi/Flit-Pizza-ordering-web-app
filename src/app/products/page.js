@@ -11,7 +11,7 @@ import axios from "axios";
 // import { useRouter } from "next/navigation";
 import styles from "../products/newItem.module.css";
 
-export default function Products() {
+ function Products() {
   const [isAddNewPopupVisible, setIsAddNewPopupVisible] = useState(false);
 
   const toggleAddNewPopup = () => {
@@ -263,3 +263,5 @@ export default function Products() {
     </>
   );
 }
+
+export default Products

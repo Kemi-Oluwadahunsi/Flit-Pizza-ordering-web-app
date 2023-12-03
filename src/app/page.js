@@ -22,7 +22,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./products/newItem.module.css";
 
-export default function Products({ setClose }) {
+ function Products({ setClose }) {
   const isMobile = useMediaQuery({ maxWidth: 480 });
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState(null);
@@ -243,3 +243,5 @@ export default function Products({ setClose }) {
     </>
   );
 }
+
+export default Products
