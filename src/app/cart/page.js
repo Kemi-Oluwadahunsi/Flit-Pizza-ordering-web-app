@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 // import axios from "axios";
 import { reset } from "../redux/cartSlice/page";
 import styles from './cash.module.css'
+import { Dispatch } from "react";
 
 
 
@@ -55,7 +56,7 @@ const Page = () => {
           currency: currency,
         },
       });
-    }, [currency, showSpinner]);
+    }, [currency, showSpinner, dispatch, options]);
 
     return (
       <>

@@ -1,4 +1,5 @@
 import Cards from "../app/Specials";
+import Link from "next/link";
 
 const CardArray = [
   {

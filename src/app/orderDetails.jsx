@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-const orderDetails = () => {
+const OrderDetails = () => {
     const [customer, setCustomer] = useState("")
     const [address, setAddress] = useState("");
   return (
@@ -17,4 +17,4 @@ const orderDetails = () => {
   )
 }
 
-export default orderDetails
+export default OrderDetails
