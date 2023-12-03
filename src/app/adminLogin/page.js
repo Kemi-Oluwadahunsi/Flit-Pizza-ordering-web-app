@@ -51,5 +51,3 @@ const Login = () => {
 }
 
 export default Login
-
-{/* <Link href = "../adminManagePage" passHref>Sign In</Link> */}

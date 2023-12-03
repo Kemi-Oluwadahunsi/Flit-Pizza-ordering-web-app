@@ -228,11 +228,12 @@ import styles from "./products/newItem.module.css";
           </h2>
 
           {isMobile ? (
-            <div className="mt-10 lg:mt-24 w-11/12 mx-auto bg-red-200 overflow-hidden">
-              <Slider {...carouselSettings}>
-                {Feedback}
-              </Slider>
-            </div>
+            <Slider
+              {...carouselSettings}
+              className="mt-10 lg:mt-24 w-11/12 mx-auto bg-red-200 overflow-hidden"
+            >
+              {Feedback}
+            </Slider>
           ) : (
             <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
               {Feedback}
