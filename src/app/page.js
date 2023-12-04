@@ -11,33 +11,22 @@ import { BiBowlRice } from "react-icons/bi";
 import { PiFan } from "react-icons/pi";
 import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useMediaQuery } from "react-responsive";
+// import Slider from "react-slick";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
+// import { useMediaQuery } from "react-responsive";
 
-import React from "react";
-import axios from "axios";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import styles from "./products/newItem.module.css";
 
- function Products({ setClose }) {
-  const isMobile = useMediaQuery({ maxWidth: 480 });
-  const [file, setFile] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [prices, setPrices] = useState([]);
-  const [extra, setExtra] = useState(null);
-  const [options, setOptions] = useState([]);
-
-  const carouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
+ function Home({ setClose }) {
+  // const isMobile = useMediaQuery({ maxWidth: 480 });
+  
+  // const carouselSettings = {
+  //   dots: true,
+  //   infinite: true,
+  //   speed: 500,
+  //   slidesToShow: 1,
+  //   slidesToScroll: 1,
+  // };
 
   const Cadd = MenuArray.map((item) => (
     <Cards
@@ -152,7 +141,7 @@ import styles from "./products/newItem.module.css";
             />
           </div>
         </section>
-        <section className=" lg:px-10 -mt-10 lg:mt-20 ">
+        <section className=" px-4 lg:px-10 -mt-10 lg:mt-20 ">
           <h4 className="love font-bold text-xl lg:text-2xl pb-1 lg:pb-4">
             Popular Dishes
           </h4>
@@ -227,22 +216,24 @@ import styles from "./products/newItem.module.css";
             Clients Testimonials
           </h2>
 
-          {isMobile ? (
+          {/* {isMobile ? (
             <Slider
               {...carouselSettings}
-              className="mt-10 lg:mt-24 w-11/12 mx-auto bg-red-200 overflow-hidden"
+              className="mt-10 lg:mt-24 w-11/12 mx-auto"
             >
-              {Feedback}
+              <div>
+                {Feedback}
+              </div>
             </Slider>
-          ) : (
+          ) : ( */}
             <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
               {Feedback}
             </div>
-          )}
+          {/* )} */}
         </section>
       </section>
     </>
   );
 }
 
-export default Products
+export default Home
