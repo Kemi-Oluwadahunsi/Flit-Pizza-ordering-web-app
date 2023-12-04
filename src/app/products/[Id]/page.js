@@ -176,7 +176,6 @@ const ProductPage = () => {
               <button
                 className="block lg:inline  h-9 lg:h-12 w-32 md:w-40 lg:w-48 mx-auto lg:ml-7 my-4 lg:mt-0 bg-yellow-500 text-white font-bold text-sm  md:text-xl rounded-3xl hover:bg-red-600"
                 onClick={handleClick}
-                // ${styles.clickColor}
               >
                 ADD TO CART
               </button>
