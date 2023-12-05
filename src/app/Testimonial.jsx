@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import Image from 'next/image'
-import { FaCartShopping , FaStar} from "react-icons/fa6";
+import Image from 'next/image';
 
 
 const Testimonials = (props) => {

@@ -1,7 +1,7 @@
-"use client"
+// "use client"
 import Head from "next/head";
+import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FaCartShopping } from "react-icons/fa6";
 import Cards from "./Specials.jsx";
 import TestsArray from "./TestimonialsArray.jsx";

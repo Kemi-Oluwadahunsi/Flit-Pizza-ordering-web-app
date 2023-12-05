@@ -1,3 +1,4 @@
+import React from "react";
 import Cards from "../app/Specials";
 import Link from "next/link";
 

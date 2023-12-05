@@ -1,11 +1,11 @@
 "use client"
 import { addProduct } from "@/app/redux/cartSlice/page";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-const ProductPage = () => {
+const Productpage = () => {
 
   const pizza1 = {
     id: 1,
@@ -196,4 +196,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default Productpage;

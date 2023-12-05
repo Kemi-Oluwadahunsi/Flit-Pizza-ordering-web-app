@@ -1,14 +1,10 @@
 'use client';
 import { useState } from "react";
-import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-// import { FaFilter} from "react-icons/fa6";
 import { IoFilter } from "react-icons/io5";
 import Cards from "../Specials";
 import CardArray from "../MenuArray.jsx";
 import axios from "axios";
-// import { useRouter } from "next/navigation";
 import styles from "../products/newItem.module.css";
 
  function Products() {
@@ -39,36 +35,36 @@ import styles from "../products/newItem.module.css";
     setPrices(currentPrices);
   };
 
-  const handleCreate = async () => {
-    const data = new FormData();
-    data.append("file", file);
-    data.append("upload_preset", "uploads");
+  // const handleCreate = async () => {
+  //   const data = new FormData();
+  //   data.append("file", file);
+  //   data.append("upload_preset", "uploads");
 
-    try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/dee9teadk/image/upload",
-        data,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      const { url } = uploadRes.data;
-      const newProduct = {
-        title,
-        description,
-        prices,
-        extra,
-        img: url,
-      };
-      await axios.post("http://localhost:3000/products", newProduct);
-      //   setClose(true);
-    } catch (err) {
-      console.error("Error uploading to Cloudinary:", err);
-      console.log("Cloudinary response:", err.response);
-    }
-  };
+  //   try {
+  //     const uploadRes = await axios.post(
+  //       "https://api.cloudinary.com/v1_1/dee9teadk/image/upload",
+  //       data,
+  //       {
+  //         headers: {
+  //           "Content-Type": "multipart/form-data",
+  //         },
+  //       }
+  //     );
+  //     const { url } = uploadRes.data;
+  //     const newProduct = {
+  //       title,
+  //       description,
+  //       prices,
+  //       extra,
+  //       img: url,
+  //     };
+  //     await axios.post("http://localhost:3000/products", newProduct);
+  //     //   setClose(true);
+  //   } catch (err) {
+  //     console.error("Error uploading to Cloudinary:", err);
+  //     console.log("Cloudinary response:", err.response);
+  //   }
+  // };
 
   const Cadd = CardArray.map((item) => (
     <Link key={item.id} href={`/products/1`}>
@@ -237,7 +233,7 @@ import styles from "../products/newItem.module.css";
                     Close
                   </button>
 
-                  <button className={styles.addButton} onClick={handleCreate}>
+                  <button className={styles.addButton}>
                     Create Pizza
                   </button>
                 </div>
