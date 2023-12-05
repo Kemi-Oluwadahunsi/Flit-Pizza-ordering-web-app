@@ -1,47 +1,31 @@
-"use client"
+
+"use client";
 import React from "react";
-import Image from "next/image"
-import { useDispatch, useSelector } from "react-redux"; 
+import Image from "next/image";
 import {
   PayPalScriptProvider,
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 // import axios from "axios";
-import { reset } from "../redux/cartSlice/page";
-import styles from './cash.module.css'
-import { Dispatch } from "react";
-
-
+import styles from "./cash.module.css";
 
 const Page = () => {
-   const cart = useSelector((state) => state.cart);
-  const [open, setOpen] = useState(false)
+  const [cart, setCart] = useState({
+    products: [],
+    total: 0,
+  });
+  const [open, setOpen] = useState(false);
   const [isCashOnDeliveryVisible, setIsCashOnDeliveryVisible] = useState(false);
   const amount = cart.total;
-  const currency = "USD"
+  const currency = "USD";
   const style = { layout: "vertical" };
-  const dispatch = useDispatch();
   const router = useRouter();
 
   const toggleCashOnDelivery = () => {
     setIsCashOnDeliveryVisible(!isCashOnDeliveryVisible);
-  };
-
-
-  const createOrder = async (data) => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/orders", data);
-      if (res.status === 201) {
-        dispatch(reset());
-        router.push(`/orders/${res.data._id}`);
-      }
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   // Custom component to wrap the PayPalButtons and handle currency changes
@@ -82,7 +66,7 @@ const Page = () => {
                 return orderId;
               });
           }}
-          onApprove= {(data, actions) => {
+          onApprove={(data, actions) => {
             return actions.order.capture().then(function (details) {
               router.push("/orders");
             });
@@ -93,8 +77,8 @@ const Page = () => {
   };
 
   const cashOrder = () => {
-    return router.push("/orders")
-  }
+    return router.push("/orders");
+  };
 
   return (
     <div className="flex pageMargin flex-col lg:flex-row mx-auto lg:m-0">

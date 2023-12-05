@@ -14,7 +14,7 @@ import { FaTimes } from "react-icons/fa";
 const Navbar = () => {
   const router = useRouter()
   const [showMobileContent, setShowMobileContent] = useState(false);
-  const quantity = useSelector((state) => state.cart.quantity);
+  const [quantity, setQuantity] = useState(0);
 
   const toggleMobileContent = () => {
     setShowMobileContent(!showMobileContent);

@@ -19,11 +19,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReduxProvider>
+        {/* <ReduxProvider> */}
           <Navbar />
           <div className="">{children}</div>
           <Footer />
-        </ReduxProvider>
+        {/* </ReduxProvider> */}
       </body>
     </html>
   );

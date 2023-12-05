@@ -1,12 +1,8 @@
 "use client"
-import { addProduct } from "@/app/redux/cartSlice/page";
-// import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 import Image from "next/image";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 
 const Productpage = () => {
-
   const pizza1 = {
     id: 1,
     img: "/images/loaf-pizza.jpg",
@@ -19,32 +15,31 @@ const Productpage = () => {
       {
         id: 1,
         text: "Sauce",
-        price: 2
-      }
-    ]
-  }
-     
+        price: 2,
+      },
+    ],
+  };
+
   const [price, setPrice] = useState(pizza1.price[0]);
   const [size, setSize] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [extras, setExtras] = useState([]);
-  const dispatch = useDispatch();
 
-  const changePrice = (number) =>{
+  const changePrice = (number) => {
     setPrice(price + number);
-  }
+  };
 
-  const handleSize = (sizeIndex)=>{
+  const handleSize = (sizeIndex) => {
     const difference = pizza1.price[sizeIndex] - pizza1.price[size];
     setSize(sizeIndex);
-    changePrice(difference)
-  }
+    changePrice(difference);
+  };
 
   const handleChange = (e, option) => {
     const checked = e.target.checked;
 
     if (checked) {
-      setExtras((prev) =>  [...prev, option]);
+      setExtras((prev) => [...prev, option]);
       changePrice(option.price);
     } else {
       setExtras((prev) => prev.filter((extra) => extra.id !== option.id));
@@ -54,14 +49,14 @@ const Productpage = () => {
 
   const handleClick = () => {
     const extrasText = extras.map((extra) => extra.text);
-    dispatch(
-      addProduct({
-        ...pizza1,
-        extras: extrasText.length > 0 ? extrasText : null,
-        price,
-        quantity,
-      })
-    );
+    // Instead of dispatching an action, you can handle the cart logic locally
+    console.log("Product added to cart:", {
+      ...pizza1,
+      extras: extrasText.length > 0 ? extrasText : null,
+      price,
+      quantity,
+    });
+    // You can perform any other logic here, like updating a global context or local storage
   };
 
   return (
