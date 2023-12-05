@@ -4,7 +4,6 @@ import Link from "next/link";
 import { IoFilter } from "react-icons/io5";
 import Cards from "../Specials";
 import CardArray from "../MenuArray.jsx";
-import axios from "axios";
 import styles from "../products/newItem.module.css";
 
  function Products() {
