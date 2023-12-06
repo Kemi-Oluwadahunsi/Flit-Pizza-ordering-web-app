@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import styles from '../orders/orders.module.css'
 import { FaCircleCheck } from "react-icons/fa6"; 
-import { useCart } from "../CartContext/page";
+import { useCart } from "../cartContext/page";
 
 const Order = () => {
 
