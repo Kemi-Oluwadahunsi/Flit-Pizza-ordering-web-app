@@ -1,8 +1,10 @@
 "use client"
 import React, { useState } from "react";
 import Image from "next/image";
+import { useCart } from "../../CartContext/page";
 
 const Productpage = () => {
+  const { addToCart } = useCart();
   const pizza1 = {
     id: 1,
     img: "/images/loaf-pizza.jpg",
@@ -49,16 +51,17 @@ const Productpage = () => {
 
   const handleClick = () => {
     const extrasText = extras.map((extra) => extra.text);
-    // Instead of dispatching an action, you can handle the cart logic locally
-    console.log("Product added to cart:", {
+    const productToAdd = {
       ...pizza1,
       extras: extrasText.length > 0 ? extrasText : null,
       price,
       quantity,
-    });
-    // You can perform any other logic here, like updating a global context or local storage
-  };
+    };
 
+    addToCart(productToAdd);
+    console.log("Product added to cart:", productToAdd);
+  };
+  
   return (
     <>
       <section className=" pageMargin">

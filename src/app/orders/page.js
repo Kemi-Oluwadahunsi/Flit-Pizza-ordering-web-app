@@ -1,11 +1,13 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from '../orders/orders.module.css'
 import { FaCircleCheck } from "react-icons/fa6"; 
-import cart from "../redux/cartSlice/page";
-
+import { useCart } from "../CartContext/page";
 
 const Order = () => {
+
+  const { cartItems } = useCart();
 
   const statusClass = (index) => {
     const status = 0;
@@ -15,6 +17,23 @@ const Order = () => {
     if (index - status > 1) return styles.unDone;
   }
 
+  const [userDetails, setUserDetails] = useState({
+    name: "John Doe", // Example default values, replace with actual values
+    phoneNumber: "+234 708 73627",
+    address: "Block A2-07, Halal Quarters, Oda road, Akure.",
+  });
+
+  const calculateSubtotal = (cartItems) => {
+    const subtotal = cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    return subtotal.toFixed(2);
+  };
+
+  const calculateTotal = (cartItems) => {
+    return calculateSubtotal(cartItems);
+  };
   return (
     <>
       <div className=" flex-col-reverse  lg:flex-row flex pageMargin">
@@ -22,7 +41,7 @@ const Order = () => {
           <div className="hidden lg:flex w-full ml-7 pt-7">
             <table className="w-full">
               <tr className="text-md">
-                <th className=" w-2/4">Order ID</th>
+                <th className=" w-2/5">Order ID</th>
                 <th>Customer</th>
                 <th>Address</th>
                 <th>Total</th>
@@ -34,15 +53,15 @@ const Order = () => {
                 </td>
 
                 <td>
-                  <span>08173635263</span>
+                  <span>{userDetails.phoneNumber}</span>
                 </td>
 
                 <td>
-                  <span>10, John Street</span>
+                  <span>{userDetails.address}</span>
                 </td>
 
                 <td>
-                  <span className="">${cart.total}</span>
+                  <span className="">${calculateTotal(cartItems)}</span>
                 </td>
               </tr>
             </table>
@@ -54,15 +73,15 @@ const Order = () => {
               </td>
 
               <td>
-                <span>Customer: 08173635263</span>
+                <span>Customer: {userDetails.phoneNumber}</span>
               </td>
 
               <td>
-                <span>Address: 10, John Street</span>
+                <span>Address: {userDetails.address}</span>
               </td>
 
               <td>
-                <span className="">Total: ${cart.total}</span>
+                <span className="">Total: ${calculateTotal(cartItems)}</span>
               </td>
             </tr>
           </div>
@@ -131,7 +150,7 @@ const Order = () => {
           <div className="flex flex-col w-3/4 md:w-3/5 lg:w-10/12 max-h-80 text-white bg-slate-800 p-12 mx-auto lg:mx-0">
             <h2 className="font-extrabold text-2xl mb-7">CART TOTAL</h2>
             <div className="">
-              <b className="mr-5">Subtotal:</b>${cart.total}
+              <b className="mr-5">Subtotal:</b>${calculateTotal(cartItems)}
             </div>
 
             <div>
@@ -139,7 +158,7 @@ const Order = () => {
             </div>
 
             <div>
-              <b className="mr-5">Total:</b>${cart.total}
+              <b className="mr-5">Total:</b>${calculateTotal(cartItems)}
             </div>
 
             <button

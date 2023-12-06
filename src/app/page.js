@@ -11,32 +11,23 @@ import { BiBowlRice } from "react-icons/bi";
 import { PiFan } from "react-icons/pi";
 import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
-// import Slider from "react-slick";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
-// import { useMediaQuery } from "react-responsive";
+import Link from "next/link.js";
+
 
 
  function Home({ setClose }) {
-  // const isMobile = useMediaQuery({ maxWidth: 480 });
-  
-  // const carouselSettings = {
-  //   dots: true,
-  //   infinite: true,
-  //   speed: 500,
-  //   slidesToShow: 1,
-  //   slidesToScroll: 1,
-  // };
+
 
   const Cadd = MenuArray.map((item) => (
-    <Cards
-      key={item.id}
-      id={item.id}
-      img={item.img}
-      menu={item.menu}
-      price={item.price}
-      description={item.description}
-    />
+    <Link key={item.id} href={`/products/${item.id}`} passHref>
+      <Cards
+        id={item.id}
+        img={item.img}
+        menu={item.menu}
+        price={item.price}
+        description={item.description}
+      />
+    </Link>
   ));
 
   const Feedback = TestsArray.map((item) => (
@@ -122,7 +113,7 @@ import { SlLocationPin } from "react-icons/sl";
           </div>
 
           <div className="flex flex-col lg:gap-5  text-center lg:w-4/5 lg:ml-8  -mt-96 lg:-mt-10">
-            <h2 className=" font-bold z-50 lg:w-3/4 text-4xl items-center">
+            <h2 className=" font-bold z-50 lg:z-0 lg:w-3/4 text-4xl items-center">
               Daily fresh and always tasty
             </h2>
             <p className="leading-loose text-black mt-2 lg:text-xl">
@@ -216,20 +207,10 @@ import { SlLocationPin } from "react-icons/sl";
             Clients Testimonials
           </h2>
 
-          {/* {isMobile ? (
-            <Slider
-              {...carouselSettings}
-              className="mt-10 lg:mt-24 w-11/12 mx-auto"
-            >
-              <div>
-                {Feedback}
-              </div>
-            </Slider>
-          ) : ( */}
-            <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
-              {Feedback}
-            </div>
-          {/* )} */}
+          
+          <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+            {Feedback}
+          </div>
         </section>
       </section>
     </>

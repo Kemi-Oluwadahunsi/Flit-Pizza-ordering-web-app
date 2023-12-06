@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
-import { useSelector } from "react-redux";
 import Link from "next/link";
 import { CgMenu } from "react-icons/cg";
 import { FaTimes } from "react-icons/fa";
+import { useCart } from "../CartContext/page";
 
 const Navbar = () => {
+  const { cartItems } = useCart();
   const router = useRouter()
   const [showMobileContent, setShowMobileContent] = useState(false);
   const [quantity, setQuantity] = useState(0);
@@ -86,7 +87,7 @@ const Navbar = () => {
               id="wotowoto"
               className=" cursor-pointer mb-4 lg:mb-0 lg:-mt-10 -ml-2 text-xs  md:text-sm   text-white bg-red-600 rounded-full px-1 y-1"
             >
-              {quantity}
+              {cartItems.length}
             </span>
           </div>
         </div>

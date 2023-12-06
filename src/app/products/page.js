@@ -20,7 +20,7 @@ import styles from "../products/newItem.module.css";
   const [extra, setExtra] = useState(null);
   const [options, setOptions] = useState([]);
 
-  const handleExtraInput = () => {
+  const handleExtraInput = (e) => {
     setExtra({ ...extra, [e.target.name]: e.target.value });
   };
 
@@ -33,37 +33,6 @@ import styles from "../products/newItem.module.css";
     currentPrices[index] = e.target.value;
     setPrices(currentPrices);
   };
-
-  // const handleCreate = async () => {
-  //   const data = new FormData();
-  //   data.append("file", file);
-  //   data.append("upload_preset", "uploads");
-
-  //   try {
-  //     const uploadRes = await axios.post(
-  //       "https://api.cloudinary.com/v1_1/dee9teadk/image/upload",
-  //       data,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //     const { url } = uploadRes.data;
-  //     const newProduct = {
-  //       title,
-  //       description,
-  //       prices,
-  //       extra,
-  //       img: url,
-  //     };
-  //     await axios.post("http://localhost:3000/products", newProduct);
-  //     //   setClose(true);
-  //   } catch (err) {
-  //     console.error("Error uploading to Cloudinary:", err);
-  //     console.log("Cloudinary response:", err.response);
-  //   }
-  // };
 
   const Cadd = CardArray.map((item) => (
     <Link key={item.id} href={`/products/1`}>
@@ -232,9 +201,7 @@ import styles from "../products/newItem.module.css";
                     Close
                   </button>
 
-                  <button className={styles.addButton}>
-                    Create Pizza
-                  </button>
+                  <button className={styles.addButton}>Create Pizza</button>
                 </div>
               </div>
             </div>

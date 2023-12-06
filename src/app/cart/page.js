@@ -1,84 +1,136 @@
 
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   PayPalScriptProvider,
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-// import axios from "axios";
 import styles from "./cash.module.css";
+import { useCart } from "../CartContext/page";
 
 const Page = () => {
-  const [cart, setCart] = useState({
-    products: [],
-    total: 0,
-  });
-  const [open, setOpen] = useState(false);
-  const [isCashOnDeliveryVisible, setIsCashOnDeliveryVisible] = useState(false);
-  const amount = cart.total;
   const currency = "USD";
   const style = { layout: "vertical" };
+
+  const { cartItems, clearCart} = useCart();
+  const [open, setOpen] = useState(false);
+  const [isCashOnDeliveryVisible, setIsCashOnDeliveryVisible] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    phoneNumber: "",
+    address: "",
+  });
+  const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
   const router = useRouter();
+
+  const handleInputChange = (e) => {
+    setUserDetails({
+      ...userDetails,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const calculateSubtotal = (cartItems) => {
+    const subtotal = cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    return subtotal.toFixed(2); 
+  };
+
+  const calculateTotal = (cartItems) => {
+    return calculateSubtotal(cartItems);
+  };
 
   const toggleCashOnDelivery = () => {
     setIsCashOnDeliveryVisible(!isCashOnDeliveryVisible);
   };
 
+  
+
   // Custom component to wrap the PayPalButtons and handle currency changes
-  const ButtonWrapper = ({ currency, showSpinner }) => {
-    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
-    useEffect(() => {
-      dispatch({
-        type: "resetOptions",
-        value: {
-          ...options,
-          currency: currency,
-        },
-      });
-    }, [currency, showSpinner, dispatch, options]);
-
-    return (
-      <>
-        {showSpinner && isPending && <div className="spinner" />}
-        <PayPalButtons
-          style={style}
-          disabled={false}
-          forceReRender={[amount, currency, style]}
-          fundingSource={undefined}
-          createOrder={(data, actions) => {
-            return actions.order
-              .create({
-                purchase_units: [
-                  {
-                    amount: {
-                      currency_code: currency,
-                      value: amount,
-                    },
-                  },
-                ],
-              })
-              .then((orderId) => {
-                return orderId;
-              });
-          }}
-          onApprove={(data, actions) => {
-            return actions.order.capture().then(function (details) {
-              router.push("/orders");
-            });
-          }}
-        />
-      </>
-    );
+  const createOrder = (data) => {
+    // Add your logic to handle the creation of an order
+    console.log("Order created:", data);
   };
+const ButtonWrapper = ({ currency, showSpinner }) => {
+  
+  const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+
+  useEffect(() => {
+    dispatch({
+      type: "resetOptions",
+      value: {
+        ...options,
+        currency: currency,
+      },
+    });
+  }, [currency, showSpinner]);
+
+  return (
+    <>
+      {showSpinner && isPending && <div className="spinner" />}
+      <PayPalButtons
+        style={style}
+        disabled={false}
+        forceReRender={[amount, currency, style]}
+        fundingSource={undefined}
+
+        createOrder={(data, actions) => {
+          return actions.order
+            .create({
+              purchase_units: [
+                {
+                  amount: {
+                    currency_code: currency,
+                    value: amount,
+                  },
+                },
+              ],
+            })
+            .then((orderId) => {
+              createOrder({
+                orderId: orderId,
+                amount: amount,
+                currency: currency,
+                userDetails: userDetails,
+                cartItems: cartItems,
+              });
+              return orderId;
+            });
+            
+        }}
+        onApprove={function (data, actions) {
+          return actions.order.capture().then(function (details) {
+            const shipping = details.purchase_units[0].shipping;
+            
+          });
+        }}
+      />
+    </>
+  );
+};
 
   const cashOrder = () => {
-    return router.push("/orders");
+    console.log("User Details:", userDetails);
+    clearCart();
+
+    console.log("Attempting to navigate to /orders");
+    router
+      .push("/orders")
+      .then(() => {
+        console.log("Navigated to /orders");
+      })
+      .catch((error) => {
+        console.error("Error navigating to /orders:", error);
+      });
   };
+
 
   return (
     <div className="flex pageMargin flex-col lg:flex-row mx-auto lg:m-0">
@@ -96,7 +148,7 @@ const Page = () => {
           </thead>
 
           <tbody className="">
-            {cart.products.map((product) => (
+            {cartItems.map((product) => (
               <tr
                 className="border border-t-1 border-b-1 border-l-0 border-r-0 text-center h-32"
                 key={product.id}
@@ -146,7 +198,7 @@ const Page = () => {
       </div>
       <div className="lg:hidden flex align-middle justify-center flex-1 w-screen leading-7">
         <table className="flex flex-col -m-12">
-          {cart.products.map((product) => (
+          {cartItems.map((product) => (
             <tr
               className="flex flex-col border border-t-1 border-b-1 border-l-0 border-r-0 text-center"
               key={product.id}
@@ -157,7 +209,7 @@ const Page = () => {
                     src={product.img}
                     width={100}
                     height={100}
-                    alt=""
+                    alt="pizza image"
                     className="w-44 md:w-60"
                   />
                 </div>
@@ -198,7 +250,7 @@ const Page = () => {
         <div className="flex flex-col w-7/12 md:w-2/4 lg:w-2/3 max-h-80 text-white bg-slate-800 p-5">
           <h2 className="font-extrabold text-xl mb-7 pt-5">CART TOTAL</h2>
           <div className="">
-            <b className="mr-5">Subtotal:</b>${cart.total}
+            <b className="mr-5">Subtotal:</b>${calculateSubtotal(cartItems)}
           </div>
 
           <div>
@@ -206,7 +258,7 @@ const Page = () => {
           </div>
 
           <div>
-            <b className="mr-5">Total:</b>${cart.total}
+            <b className="mr-5">Total:</b>${calculateTotal(cartItems)}
           </div>
 
           {open ? (
@@ -223,7 +275,7 @@ const Page = () => {
                   className={` flex flex-col place-items-center h-full bg-gray-300 ${styles.cashOnDelivery}`}
                 >
                   <div
-                    className={` w-3/4 lg:w-2/6 bg-white  h-3/4 lg:h-full p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl  ${styles.index}`}
+                    className={` w-3/4 lg:w-2/6 bg-white  h-3/4 p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl  ${styles.index}`}
                   >
                     <h1 className="text-2xl md:text-3xl lg:text-4xl text-black font-bold mb-5">
                       You will pay $12 on delivery.
@@ -236,7 +288,8 @@ const Page = () => {
                         type="text"
                         placeholder="John Doe"
                         name="name"
-                        className="border-2 border-gray-400 rounded-md text-sm lg:text-base"
+                        className="border-2 border-gray-400 rounded-md text-sm lg:text-base text-black"
+                        onChange={handleInputChange}
                       ></input>
 
                       <label className="text-sm md:text-lg text-black">
@@ -246,7 +299,8 @@ const Page = () => {
                         type="text"
                         placeholder="+234 708 73627"
                         name="number"
-                        className="border-2 border-gray-400 rounded-md text-sm lg:text-base"
+                        className="border-2 border-gray-400 rounded-md text-sm lg:text-base text-black"
+                        onChange={handleInputChange}
                       ></input>
 
                       <label className="text-sm md:text-lg text-black">
@@ -257,7 +311,8 @@ const Page = () => {
                         placeholder="10 John street"
                         rows={10}
                         type="text"
-                        className="border-2 border-gray-400 rounded-md h-24 md:h-32 text-sm lg:text-base"
+                        className="border-2 border-gray-400 rounded-md h-24 md:h-32 text-sm lg:text-base text-black"
+                        onChange={handleInputChange}
                       ></textarea>
                     </div>
 
@@ -276,7 +331,7 @@ const Page = () => {
               <PayPalScriptProvider
                 options={{
                   "client-id":
-                    "AYWidwQe2-wMfZ9V2M4aYoCRtu2mecaEk9-nWgcFnix3rhilizuIlN4ytwSRiykK03Gx4R77K9jOIBz3",
+                    "Ac5uI5c-088mB0qtPddSpQOtt1uknUG4eEulCBHl_3Ki8EgDbZ33eh7_4QenutkLV7RqKyidKMj0Kylq",
                   components: "buttons",
                   currency: "USD",
                   "disable-funding": "credit,card,p24",
