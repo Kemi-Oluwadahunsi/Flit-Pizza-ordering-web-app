@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
 import { useCart } from "../CartContext/page";
+import axios from "axios";
 
 const Page = () => {
   const currency = "USD";
@@ -23,8 +24,17 @@ const Page = () => {
     phoneNumber: "",
     address: "",
   });
-  const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  const calculateSubtotal = (cartItems) => {
+    const subtotal = cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    return subtotal.toFixed(2);
+  };
+
+  const [cartTotal, setCartTotal] = useState(calculateSubtotal(cartItems));
+  const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const router = useRouter();
 
   const handleInputChange = (e) => {
@@ -34,14 +44,7 @@ const Page = () => {
     });
   };
 
-  const calculateSubtotal = (cartItems) => {
-    const subtotal = cartItems.reduce(
-      (total, item) => total + item.price * item.quantity,
-      0
-    );
-    return subtotal.toFixed(2); 
-  };
-
+  
   const calculateTotal = (cartItems) => {
     return calculateSubtotal(cartItems);
   };
@@ -54,67 +57,75 @@ const Page = () => {
 
   // Custom component to wrap the PayPalButtons and handle currency changes
 
-  const createOrder = (data) => {
-    // Add your logic to handle the creation of an order
-    console.log("Order created:", data);
+  const createOrder = async (data) => {
+    try {
+      const res = await axios.post("http://localhost:3000/api/orders", data);
+      if (res.status === 201) {
+        clearCart();
+        router.push(`/orders/${res.data._id}`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
-const ButtonWrapper = ({ currency, showSpinner }) => {
-  
-  const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
-  useEffect(() => {
-    dispatch({
-      type: "resetOptions",
-      value: {
-        ...options,
-        currency: currency,
-      },
-    });
-  }, [currency, showSpinner]);
+  // Custom component to wrap the PayPalButtons and handle currency changes
+  const ButtonWrapper = ({ currency, showSpinner }) => {
+    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+    // This is the main reason to wrap the PayPalButtons in a new component
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
-  return (
-    <>
-      {showSpinner && isPending && <div className="spinner" />}
-      <PayPalButtons
-        style={style}
-        disabled={false}
-        forceReRender={[amount, currency, style]}
-        fundingSource={undefined}
+    useEffect(() => {
+      dispatch({
+        type: "resetOptions",
+        value: {
+          ...options,
+          currency: currency,
+        },
+      });
+    }, [currency, showSpinner]);
 
-        createOrder={(data, actions) => {
-          return actions.order
-            .create({
-              purchase_units: [
-                {
-                  amount: {
-                    currency_code: currency,
-                    value: amount,
+    return (
+      <>
+        {showSpinner && isPending && <div className="spinner" />}
+        <PayPalButtons
+          style={style}
+          disabled={false}
+          forceReRender={[amount, currency, style]}
+          fundingSource={undefined}
+          createOrder={(data, actions) => {
+            return actions.order
+              .create({
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: currency,
+                      value: amount,
+                    },
                   },
-                },
-              ],
-            })
-            .then((orderId) => {
-              createOrder({
-                orderId: orderId,
-                amount: amount,
-                currency: currency,
-                userDetails: userDetails,
-                cartItems: cartItems,
+                ],
+              })
+              .then((orderId) => {
+                // Your code here after create the order
+                return orderId;
               });
-              return orderId;
+          }}
+          onApprove={function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              const shipping = details.purchase_units[0].shipping;
+              createOrder({
+                customer: shipping.name.full_name,
+                address: shipping.address.address_line_1,
+                total: cartTotal,
+                userDetails: userDetails,
+                method: 1,
+              });
             });
-            
-        }}
-        onApprove={function (data, actions) {
-          return actions.order.capture().then(function (details) {
-            const shipping = details.purchase_units[0].shipping;
-            
-          });
-        }}
-      />
-    </>
-  );
-};
+          }}
+        />
+      </>
+    );
+  };
 
   const cashOrder = () => {
     console.log("User Details:", userDetails);
