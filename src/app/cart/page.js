@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import {
   PayPalScriptProvider,
@@ -25,6 +25,35 @@ const Page = () => {
     address: "",
   });
 
+    const cashOnDeliveryRef = useRef(null);
+
+    const closeCashOnDelivery = () => {
+      setIsCashOnDeliveryVisible(false);
+    };
+
+    // Event listener to close popup on click outside
+    // useEffect(() => {
+      
+
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (
+          cashOnDeliveryRef.current &&
+          !cashOnDeliveryRef.current.contains(event.target)
+        ) {
+          closeCashOnDelivery();
+        }
+      };
+
+      if (isCashOnDeliveryVisible) {
+        document.addEventListener("mousedown", handleClickOutside);
+      }
+
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [isCashOnDeliveryVisible]);
+
   const calculateSubtotal = (cartItems) => {
     const subtotal = cartItems.reduce(
       (total, item) => total + item.price * item.quantity,
@@ -37,7 +66,7 @@ const Page = () => {
   const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const router = useRouter();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e) => { 
     setUserDetails({
       ...userDetails,
       [e.target.name]: e.target.value,
@@ -48,6 +77,8 @@ const Page = () => {
   const calculateTotal = (cartItems) => {
     return calculateSubtotal(cartItems);
   };
+
+  
 
   const toggleCashOnDelivery = () => {
     setIsCashOnDeliveryVisible(!isCashOnDeliveryVisible);
@@ -283,10 +314,11 @@ const Page = () => {
 
               {isCashOnDeliveryVisible && (
                 <div
-                  className={` flex flex-col place-items-center h-full bg-gray-300 ${styles.cashOnDelivery}`}
+                  className={` flex flex-col place-items-center h-full bg-gray-300 ${styles.cashOnDelivery} `}
                 >
                   <div
-                    className={` w-3/4 lg:w-2/6 bg-white  h-3/4 p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl  ${styles.index}`}
+                    ref={cashOnDeliveryRef}
+                    className={` w-3/4 lg:w-2/6 bg-white p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl  ${styles.index}`}
                   >
                     <h1 className="text-2xl md:text-3xl lg:text-4xl text-black font-bold mb-5">
                       You will pay $12 on delivery.
