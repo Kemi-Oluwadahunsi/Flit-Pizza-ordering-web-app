@@ -1,67 +1,60 @@
 "use client"
-import React, { useState } from "react";
 import Image from "next/image";
-import { useCart } from "../../CartContext/page";
+import {useState} from 'react'
+import { useCart } from "./app/cartContext/page";
 
-const Productpage = () => {
-  const { addToCart } = useCart();
-  const pizza1 = {
-    id: 1,
-    img: "/images/loaf-pizza.jpg",
-    name: "BURGA PIZZA",
-    price: [20, 28, 35],
-    desc: "This is a burga pizza",
-    category: "Chicken, Launch, Pizza, Burger",
-    tags: "Healthy, Oragnic, Chicken, Sauce",
-    options: [
-      {
-        id: 1,
-        text: "Sauce",
-        price: 2,
-      },
-    ],
-  };
+export const ProductContent = ({title, img, prices, desc, extraOptions}) => {
 
-  const [price, setPrice] = useState(pizza1.price[0]);
-  const [size, setSize] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-  const [extras, setExtras] = useState([]);
-
-  const changePrice = (number) => {
-    setPrice(price + number);
-  };
-
-  const handleSize = (sizeIndex) => {
-    const difference = pizza1.price[sizeIndex] - pizza1.price[size];
-    setSize(sizeIndex);
-    changePrice(difference);
-  };
-
-  const handleChange = (e, option) => {
-    const checked = e.target.checked;
-
-    if (checked) {
-      setExtras((prev) => [...prev, option]);
-      changePrice(option.price);
-    } else {
-      setExtras((prev) => prev.filter((extra) => extra.id !== option.id));
-      changePrice(-option.price);
-    }
-  };
-
-  const handleClick = () => {
-    const extrasText = extras.map((extra) => extra.text);
-    const productToAdd = {
-      ...pizza1,
-      extras: extrasText.length > 0 ? extrasText : null,
-      price,
-      quantity,
+    const { addToCart } = useCart();
+     
+    const pizza1 = {
+     
+      category: "Chicken, Launch, Pizza, Burger",
+      tags: "Healthy, Oragnic, Chicken, Sauce",
     };
 
-    addToCart(productToAdd);
-    console.log("Product added to cart:", productToAdd);
-  };
-  
+    const [price, setPrice] = useState(prices);
+    const [size, setSize] = useState(0);
+    const [quantity, setQuantity] = useState(1);
+    const [extras, setExtras] = useState([]);
+
+
+    const changePrice = (number) => {
+      setPrice(price + number);
+    };
+
+    const handleSize = (sizeIndex) => {
+      const difference = prices[sizeIndex] - prices[size];
+      setSize(sizeIndex);
+      changePrice(difference);
+    };
+
+    const handleChange = (e, option) => {
+      const checked = e.target.checked;
+
+      if (checked) {
+        setExtras((prev) => [...prev, option]);
+        changePrice(option.price);
+      } else {
+        setExtras((prev) => prev.filter((extra) => extra.id !== option.id));
+        changePrice(-option.price);
+      }
+    };
+
+    const handleClick = () => {
+      const extrasText = extras.map((extra) => extra.text);
+      const productToAdd = {
+        ...pizza1,
+        extras: extrasText.length > 0 ? extrasText : null,
+        price,
+        quantity,
+      };
+
+      addToCart(productToAdd);
+      console.log("Product added to cart:", productToAdd);
+    };
+
+
   return (
     <>
       <section className=" pageMargin">
@@ -69,8 +62,8 @@ const Productpage = () => {
           <section className=" h-full lg:w-2/4">
             <div className="flex lg:flex-1 h-full items-center justify-center relative">
               <Image
-                src={pizza1.img}
-                alt={`${pizza1.name} image`}
+                src={img}
+                alt={`${title} image`}
                 objectFit="cover"
                 width={600}
                 height={600}
@@ -79,15 +72,15 @@ const Productpage = () => {
           </section>
           <section className=" -mt-10  lg:pt-3 text-center lg:text-start lg:w-2/4">
             <h1 className="font-extrabold text-2xl md:text-3xl  lg:text-4xl">
-              {pizza1.name}
+              {title}
             </h1>
             <span className="font-extrabold text-xl md:text-2xl lg:text-xl text-red-500 mt-5 block ">
-              ${price}
+              ${prices[0]}
               <span className="font-extrabold text-xl text-gray-300 ml-5">
                 8 Reviews
               </span>
             </span>
-            <p className=" md:text-2xl lg:text-lg mt-2">{pizza1.desc}</p>
+            <p className=" md:text-2xl lg:text-lg mt-2">{desc}</p>
             <p className="  md:text-2xl lg:text-lg mt-2 lg:mt-5">
               Category: {pizza1.category}
             </p>
@@ -147,16 +140,17 @@ const Productpage = () => {
               </div>
             </div>
             <h3 className="md:text-xl">Choose additional ingredients</h3>
-            <div className="ing">
-              {pizza1.options.map((option) => (
+            <div className="ing grid lg:grid-cols-3 h-16 w-3/4">
+              {extraOptions.map((option) => (
                 <div
-                  key={option.id}
-                  className="flex align-middle justify-center lg:justify-start gap-1 font-semibold text-md mt-2"
+                  key={option._id}
+                  className=" inlline w-32 flex align-middle justify-center lg:justify-start gap-1 font-semibold text-md mt-2"
                 >
                   <input
                     type="checkbox"
-                    id={option.id}
+                    id={option._id}
                     name={option.text}
+                    price={option.price}
                     className="w-4 h-4 mt-1"
                     onChange={(e) => handleChange(e, option)}
                   />
@@ -192,6 +186,4 @@ const Productpage = () => {
       </section>
     </>
   );
-};
-
-export default Productpage;
+}

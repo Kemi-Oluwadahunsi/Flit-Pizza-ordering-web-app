@@ -1,9 +1,44 @@
-
-import React from 'react'
+"use client"
+import React, { useState , useEffect } from 'react'
 import Image from 'next/image';
-// import axios from 'axios';
+import axios from 'axios';
+
+const OrdersSection = (props) => {
+  const {id, customer, address, total, status, method} = props
+  return (
+        <>
+           <tbody className="text-sm md:text-base border-t border-b border-gray-300">
+            <tr className="border-t border-b border-gray-300 text-xs md:text-base">
+              <td className="py-2">{id}</td>
+              <td className="py-2">{customer}</td>
+              <td className="py-2">${total}</td>
+              <td className="py-2">{method}</td>
+              <td className="py-2">{status}</td>
+              <td className="py-2">
+                <button className=" bg-green-700 py-1 px-1 lg:px-3 text-white">
+                  Next stage
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </>
+  )
+}
 
 const AdminPage = () => {
+  const [orders, setOrders] = useState([])
+  const [isLoading, setLoading] = useState(true);
+  useEffect(()=>{
+     axios
+     .get("https://pizza-ordering-anno.onrender.com/api/orders")
+     .then(response => {
+      console.log('promse fulfilled', response.data)
+      setOrders(response.data)
+      setLoading(false)
+     }) 
+
+  }, [])
+
   return (
     <div className="lg:flex  pageMargin">
       <div className=" md:px-5 pl-5 flex flex-col flex-1">
@@ -144,73 +179,22 @@ const AdminPage = () => {
               <th className="text-start">Action</th>
             </tr>
           </thead>
+          {orders.map((order) => (
+          <OrdersSection 
+          key = {order._id} 
+          id = {order._id}
+          customer = {order.customer}
+          address = {order.address}
+          total = {order.total}
+          status = {order.status}
+          method = {order.method}
+          __v = {order.__v}
 
-          <tbody className="text-sm md:text-base border-t border-b border-gray-300">
-            <tr className="border-t border-b border-gray-300 text-xs md:text-base">
-              <td className="py-2">{"65247a89348938".slice(0, 6)}...</td>
-              <td className="py-2">07037283748</td>
-              <td className="py-2">$175</td>
-              <td className="py-2">Cash</td>
-              <td className="py-2">Delivered</td>
-              <td className="py-2">
-                <button className=" bg-green-700 py-1 px-1 lg:px-3 text-white">
-                  Next stage
-                </button>
-              </td>
-            </tr>
 
-            <tr className="border-t border-b border-gray-300 text-xs md:text-base">
-              <td className="py-2">{"65254089348938".slice(0, 6)}...</td>
-              <td className="py-2">07037283748</td>
-              <td className="py-2">$140</td>
-              <td className="py-2">Cash</td>
-              <td className="py-2">On the way</td>
-              <td className="py-2">
-                <button className=" bg-green-700 py-1 px-1 lg:px-3 text-white">
-                  Next stage
-                </button>
-              </td>
-            </tr>
 
-            <tr className="border-t border-b border-gray-300 text-xs md:text-base">
-              <td className="py-2">{"65255089348938".slice(0, 6)}...</td>
-              <td className="py-2">07037283748</td>
-              <td className="py-2">$50</td>
-              <td className="py-2">Cash</td>
-              <td className="py-2">On the way</td>
-              <td className="py-2">
-                <button className=" bg-green-700 px-1 py-1 lg:px-3 text-white">
-                  Next stage
-                </button>
-              </td>
-            </tr>
+          />))}
 
-            <tr className="border-t border-b border-gray-300 text-xs md:text-base">
-              <td className="py-2">{"652fcf89348938".slice(0, 6)}...</td>
-              <td className="py-2">07037283748</td>
-              <td className="py-2">$150</td>
-              <td className="py-2">Cash</td>
-              <td className="py-2">Preparing</td>
-              <td className="py-2">
-                <button className=" bg-green-700 px-1 py-1 lg:px-3 text-white">
-                  Next stage
-                </button>
-              </td>
-            </tr>
-
-            <tr className="border-t border-b border-gray-300 text-xs md:text-base">
-              <td className="py-2">{"6553e989348938".slice(0, 6)}...</td>
-              <td className="py-2">07037283748</td>
-              <td className="py-2">$160</td>
-              <td className="py-2">Cash</td>
-              <td className="py-2">Preparing</td>
-              <td className="py-2">
-                <button className=" bg-green-700 px-1 py-1 lg:px-3 text-white">
-                  Next stage
-                </button>
-              </td>
-            </tr>
-          </tbody>
+          
         </table>
       </div>
     </div>

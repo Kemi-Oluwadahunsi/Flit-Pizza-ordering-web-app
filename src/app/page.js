@@ -1,9 +1,8 @@
-// "use client"
-import Head from "next/head";
+"use client"
 import React from "react";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
-import Cards from "./Specials.jsx";
+import Specials from "./Specials.jsx";
 import TestsArray from "./TestimonialsArray.jsx";
 import Testimonial from "./Testimonial.jsx";
 import MenuArray from "./MenuArray.jsx";
@@ -13,19 +12,35 @@ import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import Link from "next/link.js";
 
+import { useState, useEffect } from "react";
+import axios from 'axios'
+
 
 
  function Home({ setClose }) {
+  const [products , setProducts] = useState([])
+  const [isLoading, setLoading] = useState(true)
 
+  useEffect(() => {
+    console.log('effect')
+    axios
+    .get("https://pizza-ordering-anno.onrender.com/api/products")
+    .then(response => {
+      console.log('promise fulfilled', response.data)      
+      setProducts(response.data)
+      setLoading(false)
+    })
 
-  const Cadd = MenuArray.map((item) => (
-    <Link key={item.id} href={`/products/${item.id}`} passHref>
-      <Cards
-        id={item.id}
+  }, [])
+
+  const Cadd = products.map((item) => (
+    <Link key={item._id} href={`/products/${item._id}`} passHref>
+      <Specials
+        id={item._id}
         img={item.img}
-        menu={item.menu}
-        price={item.price}
-        description={item.description}
+        menu={item.title}
+        price={item.prices[0]} 
+        description={item.desc}
       />
     </Link>
   ));
@@ -140,8 +155,8 @@ import Link from "next/link.js";
             Browse our Menu
           </h2>
 
-          <div className=" mt-7 lg:mt-10 grid grid-rows-1 md:grid-cols-2  md:w-11/12  lg:w-full md:mx-auto lg:mx-0 lg:px-6 lg:grid-cols-3 gap-6 md:gap-5 lg:gap-16">
-            {Cadd}
+          <div className=" mt-7 lg:mt-10 grid grid-rows-1 md:grid-cols-2 lg:grid-cols-3  md:w-11/12  lg:w-full md:mx-auto lg:mx-0 lg:px-6  gap-6 md:gap-5 lg:gap-16">
+            {Cadd} {Cadd} {Cadd}           
           </div>
         </section>
         <section className=" py-10 lg:py-20 px-4 lg:px-10 bg-yellow-50 lg:mt-16 h-3/4 ">
@@ -207,7 +222,6 @@ import Link from "next/link.js";
             Clients Testimonials
           </h2>
 
-          
           <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
             {Feedback}
           </div>

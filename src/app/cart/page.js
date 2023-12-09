@@ -2,14 +2,14 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import {
-  PayPalScriptProvider,
-  PayPalButtons,
-  usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
+// import {
+//   PayPalScriptProvider,
+//   PayPalButtons,
+//   usePayPalScriptReducer,
+// } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
-import { useCart } from "../CartContext/page";
+import { useCart } from "../cartContext/page";
 import axios from "axios";
 
 const Page = () => {
@@ -88,75 +88,81 @@ const Page = () => {
 
   // Custom component to wrap the PayPalButtons and handle currency changes
 
-  const createOrder = async (data) => {
-    try {
-      const res = await axios.post("http://localhost:3000/api/orders", data);
-      if (res.status === 201) {
-        clearCart();
-        router.push(`/orders/${res.data._id}`);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const createOrder = async (data) => {
+  //   try {
+  //     const res = await axios.post("http://localhost:3000/api/orders", data);
+  //     if (res.status === 201) {
+  //       clearCart();
+  //       router.push(`/orders/${res.data._id}`);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   // Custom component to wrap the PayPalButtons and handle currency changes
-  const ButtonWrapper = ({ currency, showSpinner }) => {
-    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-    // This is the main reason to wrap the PayPalButtons in a new component
-    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+  // const ButtonWrapper = ({ currency, showSpinner }) => {
+  //   // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+  //   // This is the main reason to wrap the PayPalButtons in a new component
+  //   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
-    useEffect(() => {
-      dispatch({
-        type: "resetOptions",
-        value: {
-          ...options,
-          currency: currency,
-        },
-      });
-    }, [currency, showSpinner]);
+  //   const optionsRef = useRef(options);
 
-    return (
-      <>
-        {showSpinner && isPending && <div className="spinner" />}
-        <PayPalButtons
-          style={style}
-          disabled={false}
-          forceReRender={[amount, currency, style]}
-          fundingSource={undefined}
-          createOrder={(data, actions) => {
-            return actions.order
-              .create({
-                purchase_units: [
-                  {
-                    amount: {
-                      currency_code: currency,
-                      value: amount,
-                    },
-                  },
-                ],
-              })
-              .then((orderId) => {
-                // Your code here after create the order
-                return orderId;
-              });
-          }}
-          onApprove={function (data, actions) {
-            return actions.order.capture().then(function (details) {
-              const shipping = details.purchase_units[0].shipping;
-              createOrder({
-                customer: shipping.name.full_name,
-                address: shipping.address.address_line_1,
-                total: cartTotal,
-                userDetails: userDetails,
-                method: 1,
-              });
-            });
-          }}
-        />
-      </>
-    );
-  };
+  //   useEffect(() => {
+  //     optionsRef.current = options;
+  //   }, [options]);
+
+  //   useEffect(() => {
+  //     dispatch((prev = { options: {} }) => ({
+  //       type: "resetOptions",
+  //       value: {
+  //         ...(prev.options || {}),
+  //         currency: currency,
+  //       },
+  //     }));
+  //   }, [currency, showSpinner, dispatch]);
+
+  //   return (
+  //     <>
+  //       {showSpinner && isPending && <div className="spinner" />}
+  //       <PayPalButtons
+  //         style={style}
+  //         disabled={false}
+  //         forceReRender={[amount, currency, style]}
+  //         fundingSource={undefined}
+  //         createOrder={(data, actions) => {
+  //           return actions.order
+  //             .create({
+  //               purchase_units: [
+  //                 {
+  //                   amount: {
+  //                     currency_code: currency,
+  //                     value: amount,
+  //                   },
+  //                 },
+  //               ],
+  //             })
+  //             .then((orderId) => {
+  //               // Your code here after create the order
+  //               return orderId;
+  //             });
+  //         }}
+  //         onApprove={function (data, actions) {
+  //           return actions.order.capture().then(function (details) {
+  //             const shipping = details.purchase_units[0].shipping;
+  //             createOrder({
+  //               customer: shipping.name.full_name,
+  //               address: shipping.address.address_line_1,
+  //               total: cartTotal,
+  //               userDetails: userDetails,
+  //               method: 1,
+  //             });
+  //           });
+  //         }}
+  //       />
+  //     </>
+  //   );
+  // };
 
   const cashOrder = () => {
     console.log("User Details:", userDetails);
@@ -371,7 +377,7 @@ const Page = () => {
                 </div>
               )}
 
-              <PayPalScriptProvider
+              {/* <PayPalScriptProvider
                 options={{
                   "client-id":
                     "Ac5uI5c-088mB0qtPddSpQOtt1uknUG4eEulCBHl_3Ki8EgDbZ33eh7_4QenutkLV7RqKyidKMj0Kylq",
@@ -381,7 +387,7 @@ const Page = () => {
                 }}
               >
                 <ButtonWrapper currency={currency} showSpinner={false} />
-              </PayPalScriptProvider>
+              </PayPalScriptProvider> */}
             </div>
           ) : (
             <button

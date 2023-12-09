@@ -1,13 +1,31 @@
 'use client';
-import { useState } from "react";
+
 import Link from "next/link";
 import { IoFilter } from "react-icons/io5";
-import Cards from "../Specials";
+import Specials from "../Specials";
 import CardArray from "../MenuArray.jsx";
 import styles from "../products/newItem.module.css";
+import { useState, useEffect } from "react";
+import axios from "axios";
+// import Productpage from "./[productId]/page";
+import { useRouter } from "next/router";
+
 
  function Products() {
   const [isAddNewPopupVisible, setIsAddNewPopupVisible] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    console.log("effect");
+    axios
+      .get("https://pizza-ordering-anno.onrender.com/api/products")
+      .then((response) => {
+        console.log("promise fulfilled", response.data);
+        setProducts(response.data);
+        setLoading(false);
+      });
+  }, []);
 
   const toggleAddNewPopup = () => {
     setIsAddNewPopupVisible(!isAddNewPopupVisible);
@@ -34,14 +52,14 @@ import styles from "../products/newItem.module.css";
     setPrices(currentPrices);
   };
 
-  const Cadd = CardArray.map((item) => (
-    <Link key={item.id} href={`/products/1`}>
-      <Cards
-        id={item.id}
+  const Cadd = products.map((item) => (
+    <Link key={item._id} href={`/products/${item._id}`}>
+      <Specials
+        id={item._id}
         img={item.img}
-        menu={item.menu}
-        price={item.price}
-        description={item.description}
+        menu={item.title}
+        price={item.prices[0]}
+        description={item.desc}
       />
     </Link>
   ));
@@ -62,7 +80,7 @@ import styles from "../products/newItem.module.css";
 
           <div className=" flex  flex-col flex-1 lg:flex-row  gap-10 justify-end mt-8 lg:-mt-10">
             <span className="font-bold text-xl ">
-              Showing all {CardArray.length} results
+              Showing all {products.length} results
             </span>
             <div>
               <select
@@ -211,7 +229,7 @@ import styles from "../products/newItem.module.css";
 
       <section className=" mx-auto lg:mx-0 px-4  lg:-mt-16 ">
         <div className=" px-4 mt-10 lg:mt-0 grid grid-rows-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-6">
-          {Cadd}
+          {Cadd} {Cadd} {Cadd} {Cadd}
         </div>
       </section>
 
@@ -222,6 +240,7 @@ import styles from "../products/newItem.module.css";
           </button>
         </Link>
       </div>
+   
     </>
   );
 }

@@ -9,7 +9,7 @@ import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { CgMenu } from "react-icons/cg";
 import { FaTimes } from "react-icons/fa";
-import { useCart } from "../CartContext/page";
+import { useCart } from "../cartContext/page";
 
 const Navbar = () => {
   const { cartItems } = useCart();
