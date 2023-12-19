@@ -6,14 +6,14 @@ import { FaCartShopping , FaStar} from "react-icons/fa6";
 const Specials = ({img, linked, menu, price,description}) => {
     return (
       <>
-        <div className=''>
-          <div className=" border-2 border-gray-300 rounded-lg font-medium  cursor-pointer  ">
+        <div className="">
+          <div className=" border-2 border-gray-300 rounded-lg font-medium  cursor-pointer lg:hover:transform lg:hover:scale-105 ">
             <section className="bg-white grid  lg:grid-rows-2  rounded-lg">
               <div className=" place-self-center">
                 <Image
                   width={250}
                   height={150}
-                  className=""
+                  className="mt-5 lg:mt-0"
                   src={img}
                   alt={`${menu} Image`}
                 />
@@ -48,7 +48,7 @@ const Specials = ({img, linked, menu, price,description}) => {
 };
 
 Specials.propTypes = {
-    id: PropTypes.number, 
+    id: PropTypes.string, 
     img: PropTypes.string,
     menu: PropTypes.string,
     link: PropTypes.string,

@@ -1,0 +1,7 @@
+.blogBackground{
+    background-image: url('../../../public/images/pizza-blog.jpg');
+    height: 30rem;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}

@@ -15,7 +15,8 @@ module.exports = {
 
       height : {
         'mainHeight' : '140vh'
-      }
+      },
+      
     },
   },
   plugins: [],

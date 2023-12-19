@@ -27,7 +27,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="py-2 lg:px-8 h-28 lg:fixed grid bg-white lg:z-50  grid-cols-2 lg:grid-cols-5 w-full ">
+      <header className="py-2 lg:px-8 h-28 fixed grid bg-white lg:z-50  grid-cols-2 lg:grid-cols-5 w-full ">
         <div className="lg:col-span-2 grid grid-cols-2">
           <Image
             src="/images/pizza-logo_afsvzn.png"
@@ -48,7 +48,7 @@ const Navbar = () => {
         <div className="lg:hidden relative w-10 h-10 top-2 left-40 md:left-72 flex items-center">
           <button
             onClick={toggleMobileContent}
-            className="text-black underline text-3xl md:text-4xl"
+            className="text-black underline text-3xl md:text-4xl fixMenu"
           >
             {showMobileContent ? <FaTimes /> : <CgMenu />}
           </button>
@@ -66,13 +66,10 @@ const Navbar = () => {
             <Link href="../products" passHref>
               <li className="cursor-pointer"> PRODUCTS</li>
             </Link>
-            <Link href="#" passHref>
-              <li className="cursor-pointer"> PAGES</li>
-            </Link>
-            <Link href="#" passHref>
+            <Link href="../blog" passHref>
               <li className="cursor-pointer">BLOG</li>
             </Link>
-            <Link href="#" passHref>
+            <Link href="../contact" passHref>
               <li className="cursor-pointer">CONTACTS</li>
             </Link>
             <FaSearch className=" hidden lg:block cursor-pointer  lg:mr-14 text-black" />
@@ -80,7 +77,7 @@ const Navbar = () => {
 
           <div
             onClick={navigateToCart}
-            className="flex  flex-row  absolute flex-grow items-end lg:pt-8 lg:items-center right-16 lg:right-5  top-4 lg:top-2 md:mr-10 lg:mr-5  md:ml-96 lg:ml-4"
+            className="fixCart flex  flex-row fixed lg:absolute flex-grow items-end lg:pt-8 lg:items-center right-16 lg:right-5  top-4 lg:top-2 md:mr-10 lg:mr-5  md:ml-96 lg:ml-4"
           >
             <FaCartShopping className="text-blue-500 cursor-pointer text-xl md:text-2xl  ml-2 lg:text-3xl" />
             <span

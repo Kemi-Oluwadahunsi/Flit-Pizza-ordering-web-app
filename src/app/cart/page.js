@@ -1,58 +1,54 @@
-
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-// import {
-//   PayPalScriptProvider,
-//   PayPalButtons,
-//   usePayPalScriptReducer,
-// } from "@paypal/react-paypal-js";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
 import { useCart } from "../cartContext/page";
 import axios from "axios";
+import {
+  PayPalScriptProvider,
+  PayPalButtons,
+  usePayPalScriptReducer,
+} from "@paypal/react-paypal-js";
+
 
 const Page = () => {
   const currency = "USD";
   const style = { layout: "vertical" };
 
-  const { cartItems, clearCart} = useCart();
+  const { cartItems, clearCart } = useCart();
   const [open, setOpen] = useState(false);
   const [isCashOnDeliveryVisible, setIsCashOnDeliveryVisible] = useState(false);
   const [userDetails, setUserDetails] = useState({
-    name: "",
+    title: "",
     phoneNumber: "",
     address: "",
   });
 
-    const cashOnDeliveryRef = useRef(null);
+  const cashOnDeliveryRef = useRef(null);
 
-    const closeCashOnDelivery = () => {
-      setIsCashOnDeliveryVisible(false);
+  const closeCashOnDelivery = () => {
+    setIsCashOnDeliveryVisible(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        cashOnDeliveryRef.current &&
+        !cashOnDeliveryRef.current.contains(event.target)
+      ) {
+        closeCashOnDelivery();
+      }
     };
 
-    // Event listener to close popup on click outside
-    // useEffect(() => {
-      
+    if (isCashOnDeliveryVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
 
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (
-          cashOnDeliveryRef.current &&
-          !cashOnDeliveryRef.current.contains(event.target)
-        ) {
-          closeCashOnDelivery();
-        }
-      };
-
-      if (isCashOnDeliveryVisible) {
-        document.addEventListener("mousedown", handleClickOutside);
-      }
-
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [isCashOnDeliveryVisible]);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isCashOnDeliveryVisible]);
 
   const calculateSubtotal = (cartItems) => {
     const subtotal = cartItems.reduce(
@@ -62,122 +58,94 @@ const Page = () => {
     return subtotal.toFixed(2);
   };
 
-  const [cartTotal, setCartTotal] = useState(calculateSubtotal(cartItems));
-  const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  const amount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+
   const router = useRouter();
 
-  const handleInputChange = (e) => { 
+  const handleInputChange = (e) => {
     setUserDetails({
       ...userDetails,
       [e.target.name]: e.target.value,
     });
   };
 
-  
   const calculateTotal = (cartItems) => {
     return calculateSubtotal(cartItems);
   };
-
-  
 
   const toggleCashOnDelivery = () => {
     setIsCashOnDeliveryVisible(!isCashOnDeliveryVisible);
   };
 
-  
-
-  // Custom component to wrap the PayPalButtons and handle currency changes
-
-  // const createOrder = async (data) => {
-  //   try {
-  //     const res = await axios.post("http://localhost:3000/api/orders", data);
-  //     if (res.status === 201) {
-  //       clearCart();
-  //       router.push(`/orders/${res.data._id}`);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // Custom component to wrap the PayPalButtons and handle currency changes
-  // const ButtonWrapper = ({ currency, showSpinner }) => {
-  //   // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-  //   // This is the main reason to wrap the PayPalButtons in a new component
-  //   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-
-  //   const optionsRef = useRef(options);
-
-  //   useEffect(() => {
-  //     optionsRef.current = options;
-  //   }, [options]);
-
-  //   useEffect(() => {
-  //     dispatch((prev = { options: {} }) => ({
-  //       type: "resetOptions",
-  //       value: {
-  //         ...(prev.options || {}),
-  //         currency: currency,
-  //       },
-  //     }));
-  //   }, [currency, showSpinner, dispatch]);
-
-  //   return (
-  //     <>
-  //       {showSpinner && isPending && <div className="spinner" />}
-  //       <PayPalButtons
-  //         style={style}
-  //         disabled={false}
-  //         forceReRender={[amount, currency, style]}
-  //         fundingSource={undefined}
-  //         createOrder={(data, actions) => {
-  //           return actions.order
-  //             .create({
-  //               purchase_units: [
-  //                 {
-  //                   amount: {
-  //                     currency_code: currency,
-  //                     value: amount,
-  //                   },
-  //                 },
-  //               ],
-  //             })
-  //             .then((orderId) => {
-  //               // Your code here after create the order
-  //               return orderId;
-  //             });
-  //         }}
-  //         onApprove={function (data, actions) {
-  //           return actions.order.capture().then(function (details) {
-  //             const shipping = details.purchase_units[0].shipping;
-  //             createOrder({
-  //               customer: shipping.name.full_name,
-  //               address: shipping.address.address_line_1,
-  //               total: cartTotal,
-  //               userDetails: userDetails,
-  //               method: 1,
-  //             });
-  //           });
-  //         }}
-  //       />
-  //     </>
-  //   );
-  // };
-
   const cashOrder = () => {
-    console.log("User Details:", userDetails);
+    const totalCashOnDelivery = cartItems.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+
+    console.log("Total Cash on Delivery:", totalCashOnDelivery);
+
     clearCart();
 
     console.log("Attempting to navigate to /orders");
     router
       .push("/orders")
-      .then(() => {
-        console.log("Navigated to /orders");
-      })
-      .catch((error) => {
-        console.error("Error navigating to /orders:", error);
-      });
-  };
+      
+    };
+    
+    // Custom component to wrap the PayPalButtons and handle currency changes
+    const ButtonWrapper = ({ currency, showSpinner }) => {
+      // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+      // This is the main reason to wrap the PayPalButtons in a new component
+      const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+
+      useEffect(() => {
+        dispatch({
+          type: "resetOptions",
+          value: {
+            ...options,
+            currency: currency,
+          },
+        });
+      }, [currency, showSpinner]);
+
+      return (
+        <div>
+          {showSpinner && isPending && <div className="spinner" />}
+          <PayPalButtons
+            style={style}
+            disabled={false}
+            forceReRender={[amount, currency, style]}
+            fundingSource={undefined}
+            createOrder={(data, actions) => {
+              return actions.order
+                .create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        currency_code: currency,
+                        value: amount,
+                      },
+                    },
+                  ],
+                })
+                .then((orderId) => {
+                  // Your code here after create the order
+                });
+            }}
+            onApprove={function (data, actions) {
+              return actions.order.capture().then(function (details) {
+
+              });
+            }}
+          />
+        </div>
+      );
+    };
+
 
 
   return (
@@ -214,7 +182,7 @@ const Page = () => {
                 </td>
 
                 <td>
-                  <span className="font-bold text-xl">{product.name}</span>
+                  <span className="font-bold text-xl">{product.title}</span>
                 </td>
 
                 <td>
@@ -264,7 +232,7 @@ const Page = () => {
               </td>
 
               <td>
-                <span className="md:text-2xl">Pizza Type: {product.name}</span>
+                <span className="md:text-2xl">Pizza Type: {product.title}</span>
               </td>
 
               <td>
@@ -320,14 +288,14 @@ const Page = () => {
 
               {isCashOnDeliveryVisible && (
                 <div
-                  className={` flex flex-col place-items-center h-full bg-gray-300 ${styles.cashOnDelivery} `}
+                  className={`flex flex-col place-items-center h-full bg-gray-300 ${styles.cashOnDelivery}`}
                 >
                   <div
                     ref={cashOnDeliveryRef}
-                    className={` w-3/4 lg:w-2/6 bg-white p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl  ${styles.index}`}
+                    className={`w-3/4 lg:w-2/6 bg-white p-7 lg:p-10 leading-7 lg:leading-10 rounded-2xl ${styles.index}`}
                   >
                     <h1 className="text-2xl md:text-3xl lg:text-4xl text-black font-bold mb-5">
-                      You will pay $12 on delivery.
+                      You will pay ${calculateSubtotal(cartItems)} on delivery.
                     </h1>
                     <div className="flex flex-col gap-3">
                       <label className="text-sm md:text-lg text-black">
@@ -356,19 +324,18 @@ const Page = () => {
                         Address
                       </label>
                       <textarea
-                        typeof="text"
-                        placeholder="10 John street"
-                        rows={10}
                         type="text"
+                        placeholder="10 John street"
+                        rows={4}
                         className="border-2 border-gray-400 rounded-md h-24 md:h-32 text-sm lg:text-base text-black"
                         onChange={handleInputChange}
                       ></textarea>
                     </div>
 
-                    <div className=" mt-5 flex justify-center ">
+                    <div className="mt-5 flex justify-center">
                       <button
                         onClick={cashOrder}
-                        className=" bg-yellow-500 w-20 lg:w-28 text-black text-sm lg:text-lg border-2 border-black p-2 rounded-2xl"
+                        className="bg-yellow-500 w-20 lg:w-28 text-black text-sm lg:text-lg border-2 border-black p-2 rounded-2xl"
                       >
                         Order
                       </button>
@@ -377,7 +344,9 @@ const Page = () => {
                 </div>
               )}
 
-              {/* <PayPalScriptProvider
+              {/* Uncomment the following code if you want to include PayPal integration */}
+
+              <PayPalScriptProvider
                 options={{
                   "client-id":
                     "Ac5uI5c-088mB0qtPddSpQOtt1uknUG4eEulCBHl_3Ki8EgDbZ33eh7_4QenutkLV7RqKyidKMj0Kylq",
@@ -387,12 +356,12 @@ const Page = () => {
                 }}
               >
                 <ButtonWrapper currency={currency} showSpinner={false} />
-              </PayPalScriptProvider> */}
+              </PayPalScriptProvider>
             </div>
           ) : (
             <button
               onClick={() => setOpen(true)}
-              className="mt-10 bg-yellow-500 py-2  md:py-3 w-44 md:w-72 lg:w-80  mx-auto rounded-3xl font-extrabold lg:text-xl cursor-pointer "
+              className="mt-10 bg-yellow-500 py-2 md:py-3 w-44 md:w-72 lg:w-80 mx-auto rounded-3xl font-extrabold lg:text-xl cursor-pointer"
             >
               CHECKOUT NOW!
             </button>
@@ -401,6 +370,6 @@ const Page = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Page
+export default Page;

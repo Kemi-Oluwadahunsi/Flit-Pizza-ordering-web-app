@@ -1,4 +1,5 @@
-import { ProductContent } from "@/ProductContent";
+import { ProductContent } from "@/app/ProductContent";
+
 export async function generateStaticParams() {
   const products = await fetch(
     "https://pizza-ordering-anno.onrender.com/api/products"
@@ -24,7 +25,6 @@ const Productpage = async ({ params }) => {
   return (
     <>
       <ProductContent img = {product.img} prices= {product.prices} title = {product.title}  desc= {product.desc} extraOptions={product.extraOptions}/>
-     
     </>
   )
 };
