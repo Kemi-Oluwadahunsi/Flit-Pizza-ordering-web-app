@@ -75,7 +75,9 @@ const Page = () => {
   };
 
   const calculateTotal = (cartItems) => {
-    return calculateSubtotal(cartItems);
+    if (typeof window !== "undefined") {
+      return calculateSubtotal(cartItems);
+    }
   };
 
   const toggleCashOnDelivery = () => {
