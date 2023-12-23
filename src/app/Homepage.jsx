@@ -26,29 +26,27 @@ function Homepage({ setClose, pproducts }) {
 
 
   useEffect(() => {
-    const strengthIntervalId = setInterval(() => {
-      if (owlRefStrength.current) {
-        owlRefStrength.current.next();
-      }
-    }, 2000);
+    // Client-side code
+    if (typeof window !== "undefined") {
+      const strengthIntervalId = setInterval(() => {
+        if (owlRefStrength.current) {
+          owlRefStrength.current.next();
+        }
+      }, 2000);
 
-    const testimonialsIntervalId = setInterval(() => {
-      if (owlRefTestimonials.current) {
-        owlRefTestimonials.current.next();
-      }
-    }, 2000);
+      const testimonialsIntervalId = setInterval(() => {
+        if (owlRefTestimonials.current) {
+          owlRefTestimonials.current.next();
+        }
+      }, 2000);
 
-    // Clear the intervals when the component unmounts
-    return () => {
-      clearInterval(strengthIntervalId);
-      clearInterval(testimonialsIntervalId);
-    };
+      // Clear the intervals when the component unmounts
+      return () => {
+        clearInterval(strengthIntervalId);
+        clearInterval(testimonialsIntervalId);
+      };
+    }
   }, []);
-
-  useEffect(() => {
-    // Update the state when props change
-    setProducts(pproducts);
-  }, [pproducts]);
 
 
 
