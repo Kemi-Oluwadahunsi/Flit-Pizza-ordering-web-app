@@ -263,7 +263,7 @@ function Homepage({ setClose, pproducts }) {
             Clients Testimonials
           </h2>
 
-          {/* <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8"> */}
+          <div >
           <OwlCarousel
             className="owl-theme"
             ref={owlRefTestimonials}
@@ -271,7 +271,7 @@ function Homepage({ setClose, pproducts }) {
           >
             {Feedback}
           </OwlCarousel>
-          {/* </div> */}
+          </div>
         </section>
       </section>
     </>
