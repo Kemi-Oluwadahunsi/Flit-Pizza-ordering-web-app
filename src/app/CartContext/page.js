@@ -50,9 +50,9 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-const UsingCart = () => {
+ export const UsingCart = () => {
   return useContext(CartContext);
 };
 
 
-export default UsingCart
+

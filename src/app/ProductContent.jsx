@@ -1,10 +1,10 @@
 "use client"
 import Image from "next/image";
 import { useState } from "react";
-import  UsingCart  from "./cartContext/page";
+import  {UsingCart}  from "./cartContext/page";
 
 export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
-  const { addToCart } = UsingCart;
+  const { addToCart } = UsingCart();
 
   const pizza1 = {
     category: "Chicken, Launch, Pizza, Burger",
