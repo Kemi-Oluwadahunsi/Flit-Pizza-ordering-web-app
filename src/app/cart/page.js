@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
-import UsingCart  from "@/app/cartContext/page";
+import { UsingCart } from "../cartContext/page";
 import axios from "axios";
 import {
   PayPalScriptProvider,
