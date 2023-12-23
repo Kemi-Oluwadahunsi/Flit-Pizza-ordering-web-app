@@ -2,7 +2,7 @@
 
 import { Inter } from "next/font/google";
 import "./globals.css";
-import  CartProvider  from "./cartContext/page";
+import  CartProvider from "./cartContext/page";
 import Navbar from "./navbar/page";
 import Footer from "./footer/page";
 import Script from "next/script";

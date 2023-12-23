@@ -50,6 +50,6 @@ export const CartProvider = ({ children }) => {
   );
 };
 
-export const useCart = () => {
+export const UsingCart = () => {
   return useContext(CartContext);
 };

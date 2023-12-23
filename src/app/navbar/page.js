@@ -9,10 +9,10 @@ import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { CgMenu } from "react-icons/cg";
 import { FaTimes } from "react-icons/fa";
-import useCart from "@/app/cartContext/page";
+import UsingCart from "@/app/cartContext/page";
 
 const Navbar = () => {
-  const { cartItems } = useCart();
+  const { cartItems } = UsingCart();
   const router = useRouter()
   const [showMobileContent, setShowMobileContent] = useState(false);
   const [quantity, setQuantity] = useState(0);

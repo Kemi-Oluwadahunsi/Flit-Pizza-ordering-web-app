@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
-import useCart  from "@/app/cartContext/page";
+import UsingCart  from "@/app/cartContext/page";
 import axios from "axios";
 import {
   PayPalScriptProvider,
@@ -16,7 +16,7 @@ const Page = () => {
   const currency = "USD";
   const style = { layout: "vertical" };
 
-  const { cartItems, clearCart } = useCart();
+  const { cartItems, clearCart } = UsingCart();
   const [open, setOpen] = useState(false);
   const [isCashOnDeliveryVisible, setIsCashOnDeliveryVisible] = useState(false);
   const [userDetails, setUserDetails] = useState({
