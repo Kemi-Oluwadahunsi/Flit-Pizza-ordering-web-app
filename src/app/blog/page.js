@@ -20,11 +20,12 @@ const BlogPage = () => {
           <div className="flex flex-col gap-5 mt-10">
             <desc className="text-xl text-gray-500">
               Pizza, the universally loved dish that transcends cultural
-              boundaries, is more than just a meal—it's a delightful experience
-              that tantalizes our taste buds and brings people together. In this
-              ode to the divine combination of crust, sauce, cheese, and
-              toppings, let's explore the sheer deliciousness of pizza and savor
-              the best ways to indulge in this culinary masterpiece.
+              boundaries, is more than just a meal—it&apos;s a delightful
+              experience that tantalizes our taste buds and brings people
+              together. In this ode to the divine combination of crust, sauce,
+              cheese, and toppings, let&apos;s explore the sheer deliciousness
+              of pizza and savor the best ways to indulge in this culinary
+              masterpiece.
             </desc>
 
             <h2 className="font-bold text-3xl">
@@ -68,8 +69,8 @@ const BlogPage = () => {
 
             <p className="text-gray-500 text-lg">
               Ah, the cheese! The gooey, melted layer that binds everything
-              together. Whether you're a fan of the stretchy mozzarella on a
-              Margherita or the bold flavors of gorgonzola on a gourmet pizza,
+              together. Whether you&apos;re a fan of the stretchy mozzarella on
+              a Margherita or the bold flavors of gorgonzola on a gourmet pizza,
               the cheese transforms each bite into a luxurious experience. The
               stretchy, gooey texture of melted mozzarella or the sharpness of
               Parmesan, each bite is a testament to the art of cheese
@@ -120,11 +121,12 @@ const BlogPage = () => {
             <h2 className="font-bold text-2xl">In Conclusion</h2>
 
             <p className="text-gray-500 text-lg">
-              In conclusion, pizza is more than just a dish; it's a celebration
-              of flavors, a testament to culinary creativity, and a source of
-              joy for people worldwide. So, the next time you find yourself in
-              the presence of a piping hot pizza, remember to embrace the
-              moment, savor each bite, and revel in the magic that is pizza.
+              In conclusion, pizza is more than just a dish; it&apos;s a
+              celebration of flavors, a testament to culinary creativity, and a
+              source of joy for people worldwide. So, the next time you find
+              yourself in the presence of a piping hot pizza, remember to
+              embrace the moment, savor each bite, and revel in the magic that
+              is pizza.
               <span className="block pt-10 italic text-xl font-bold">
                 Buon appetito!
               </span>
