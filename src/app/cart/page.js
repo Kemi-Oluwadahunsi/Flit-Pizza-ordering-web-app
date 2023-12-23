@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
 import { UsingCart } from "../cartcontext.js";
-import axios from "axios";
+
 import {
   PayPalScriptProvider,
   PayPalButtons,
@@ -31,22 +31,25 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        cashOnDeliveryRef.current &&
-        !cashOnDeliveryRef.current.contains(event.target)
-      ) {
-        closeCashOnDelivery();
+    // Check if window is defined before using it
+    if (typeof window !== "undefined") {
+      const handleClickOutside = (event) => {
+        if (
+          cashOnDeliveryRef.current &&
+          !cashOnDeliveryRef.current.contains(event.target)
+        ) {
+          closeCashOnDelivery();
+        }
+      };
+
+      if (isCashOnDeliveryVisible) {
+        document.addEventListener("mousedown", handleClickOutside);
       }
-    };
 
-    if (isCashOnDeliveryVisible) {
-      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
     }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
   }, [isCashOnDeliveryVisible]);
 
   const calculateSubtotal = (cartItems) => {
