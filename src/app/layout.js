@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { CartProvider } from "./cartcontext/page.js";
+import { CartProvider } from "./cartcontext.js";
 import Navbar from "./navbar/page";
 import Footer from "./footer/page";
 import Script from "next/script";

@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { CgMenu } from "react-icons/cg";
 import { FaTimes } from "react-icons/fa";
-import { UsingCart } from "../cartcontext/page.js";
+import { UsingCart } from "../cartcontext";
 
 const Navbar = () => {
   const { cartItems } = UsingCart();
