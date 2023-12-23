@@ -20,7 +20,6 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 
-
 function Homepage({ setClose, pproducts }) {
   const owlRefStrength = useRef(null);
   const owlRefTestimonials = useRef(null);
