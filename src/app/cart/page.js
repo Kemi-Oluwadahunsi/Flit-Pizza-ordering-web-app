@@ -113,7 +113,7 @@ const Page = () => {
           currency: currency,
         },
       });
-    }, [currency, showSpinner]);
+    }, [currency, showSpinner,dispatch, options]);
 
     return (
       <div>
