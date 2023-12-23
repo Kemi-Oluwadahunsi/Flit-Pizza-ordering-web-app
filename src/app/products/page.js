@@ -36,11 +36,22 @@ const createProduct = async (newPizzaObject) => {
   }
 };
 
-export default async function Product() {
+
+
+export default async function  Product (){
   const pproducts = await getProductsData();
-  console.log("pproducts:", pproducts);
-  return <ProductsClientSide pproducts={pproducts} />;
+
+
+
+  return (
+    <>
+      <ProductsClientSide pproducts={pproducts} />
+    </>
+  );
 }
+export { getProductsData, createProduct };
+
+
 
 
 
