@@ -11,13 +11,11 @@ import { PiFan } from "react-icons/pi";
 import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import Link from "next/link.js";
-import $ from "jquery";
 import ReactOwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import dynamic from "next/dynamic";
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+
 
 
 
@@ -45,7 +43,7 @@ function Homepage({ setClose, pproducts }) {
       clearInterval(strengthIntervalId);
       clearInterval(testimonialsIntervalId);
     };
-  }, [pproducts]);
+  }, []);
 
   useEffect(() => {
     // Update the state when props change
