@@ -16,12 +16,35 @@ import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 
 
 function Homepage({ setClose, pproducts }) {
+  const owlRefStrength = useRef(null);
+  const owlRefTestimonials = useRef(null);
+
+  useEffect(() => {
+    const strengthIntervalId = setInterval(() => {
+      if (owlRefStrength.current) {
+        owlRefStrength.current.next();
+      }
+    }, 2000);
+
+    const testimonialsIntervalId = setInterval(() => {
+      if (owlRefTestimonials.current) {
+        owlRefTestimonials.current.next();
+      }
+    }, 2000);
+
+    // Clear the intervals when the component unmounts
+    return () => {
+      clearInterval(strengthIntervalId);
+      clearInterval(testimonialsIntervalId);
+    };
+  }, []);
+
 
   const owlCarouselOptions = {
     loop: true,
@@ -40,6 +63,7 @@ function Homepage({ setClose, pproducts }) {
       },
     },
   };
+
   const [products, setProducts] = useState(pproducts);
   
   console.log(pproducts);
@@ -70,19 +94,19 @@ function Homepage({ setClose, pproducts }) {
   return (
     <>
       <section className="overflow-x-hidden">
-        <main className="grid grid-rows-2 lg:grid-cols-5 mt-16 lg:mt-0 justify-items-center h-[35rem] lg:h-mainHeight w-screen lg:w-full  lg:pt-36">
+        <main className="grid grid-rows-2 lg:grid-cols-5 mt-16 lg:mt-0 justify-items-center h-[30rem] lg:h-mainHeight w-screen lg:w-full  lg:pt-36">
           <div className="lg:col-span-3 px-4 lg:pl-10  flex items-start">
-            <div className=" h-3/4 flex flex-col items-start  gap-2 lg:gap-5 mt-20 lg:mt-52">
-              <h1 className="font-extrabold text-slate-900 weight mr-10 lg:mr-0 text-5xl lg:text-7xl">
+            <div className=" h-3/4 flex flex-col items-center lg:items-start  gap-2 lg:gap-5 mt-20 lg:mt-52">
+              <h1 className="font-extrabold text-slate-900 text-center lg:text-start weight text-5xl lg:text-7xl">
                 Handmade,
               </h1>
-              <h1 className="w-full lg:w-3/4 font-extrabold text-start text-slate-900 weight text-5xl lg:text-7xl">
+              <h1 className="w-full lg:w-3/4 font-extrabold text-center lg:text-start text-slate-900 weight text-5xl lg:text-7xl">
                 With an Extra
               </h1>
-              <h1 className="w-full lg:w-3/4 font-extrabold text-start text-slate-900 weight text-5xl lg:text-7xl">
+              <h1 className="w-full lg:w-3/4 font-extrabold text-center lg:text-start text-slate-900 weight text-5xl lg:text-7xl">
                 Pinch of <span className="love">Love</span>
               </h1>
-              <h4 className="text-2xl lg:text-3xl mt-2 lg:mt-0  w-4/5 lg:w-3/4 text-start lg:leading-10 space-x-4 [word-spacing:5px] font-medium text-gray-800">
+              <h4 className="text-2xl lg:text-3xl mt-2 lg:mt-0  w-full lg:w-3/4 text-center lg:text-start lg:leading-10 space-x-4 [word-spacing:5px] font-medium text-gray-800">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
               </h4>
@@ -185,7 +209,12 @@ function Homepage({ setClose, pproducts }) {
             className="absolute right-0  mtop hidden lg:block :mb-20"
           />
 
-          <OwlCarousel className="owl-theme" {...owlCarouselOptions}>
+          <section className=" mt-10 lg:mt-16">
+            <OwlCarousel
+              className="owl-theme"
+              ref={owlRefStrength}
+              {...owlCarouselOptions}
+            >
               <div className="flex flex-col gap-4">
                 <BiBowlRice className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
@@ -221,7 +250,8 @@ function Homepage({ setClose, pproducts }) {
                   typesetting industry
                 </p>
               </div>
-          </OwlCarousel>
+            </OwlCarousel>
+          </section>
         </section>
         <section className="px-4 lg:px-10  mt-10 lg:mt-28">
           <Image src="/images/leaf.png" alt="" width="100" height="100" />
@@ -234,7 +264,11 @@ function Homepage({ setClose, pproducts }) {
           </h2>
 
           {/* <div className="mt-10 lg:mt-24 grid grid-rows-1 px-2  md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8"> */}
-          <OwlCarousel className="owl-theme" {...owlCarouselOptions}>
+          <OwlCarousel
+            className="owl-theme"
+            ref={owlRefTestimonials}
+            {...owlCarouselOptions}
+          >
             {Feedback}
           </OwlCarousel>
           {/* </div> */}

@@ -62,8 +62,10 @@ const Footer = () => {
             <Link href="#" passHref>
               <li>Locations</li>
             </Link>
-            <Link href="#" passHref>
-              <li>Legal</li>
+            <Link href="/adminLogin" passHref>
+              <button className="border-0 text-xs md:text-sm text-teal-600">
+                Admin Login
+              </button>
             </Link>
           </ul>
         </section>
