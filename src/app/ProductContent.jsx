@@ -4,7 +4,8 @@ import { useState } from "react";
 import  {UsingCart}  from "./cartContext/page";
 
 export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
-  const { addToCart } = UsingCart();
+  const { addToCart, removeFromCart, clearCart, cartItems } = UsingCart();
+
 
   const pizza1 = {
     category: "Chicken, Launch, Pizza, Burger",
