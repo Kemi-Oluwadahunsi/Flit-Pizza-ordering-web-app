@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image";
 import { useState } from "react";
-import { useCart } from "@/app/cartContext";
+import useCart from "@/app/cartContext";
 
 export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
   const { addToCart } = useCart();
