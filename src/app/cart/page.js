@@ -3,14 +3,13 @@ import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
-import {UsingCart}  from "../cartContext/page.js";
+import { UsingCart } from "../cartcontext/page.js";
 import axios from "axios";
 import {
   PayPalScriptProvider,
   PayPalButtons,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
-
 
 const Page = () => {
   const currency = "USD";
@@ -91,62 +90,56 @@ const Page = () => {
     clearCart();
 
     console.log("Attempting to navigate to /orders");
-    router
-      .push("/orders")
-      
-    };
-    
-    // Custom component to wrap the PayPalButtons and handle currency changes
-    const ButtonWrapper = ({ currency, showSpinner }) => {
-      // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-      // This is the main reason to wrap the PayPalButtons in a new component
-      const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+    router.push("/orders");
+  };
 
-      useEffect(() => {
-        dispatch({
-          type: "resetOptions",
-          value: {
-            ...options,
-            currency: currency,
-          },
-        });
-      }, [currency, showSpinner]);
+  // Custom component to wrap the PayPalButtons and handle currency changes
+  const ButtonWrapper = ({ currency, showSpinner }) => {
+    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
+    // This is the main reason to wrap the PayPalButtons in a new component
+    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
-      return (
-        <div>
-          {showSpinner && isPending && <div className="spinner" />}
-          <PayPalButtons
-            style={style}
-            disabled={false}
-            forceReRender={[amount, currency, style]}
-            fundingSource={undefined}
-            createOrder={(data, actions) => {
-              return actions.order
-                .create({
-                  purchase_units: [
-                    {
-                      amount: {
-                        currency_code: currency,
-                        value: amount,
-                      },
+    useEffect(() => {
+      dispatch({
+        type: "resetOptions",
+        value: {
+          ...options,
+          currency: currency,
+        },
+      });
+    }, [currency, showSpinner]);
+
+    return (
+      <div>
+        {showSpinner && isPending && <div className="spinner" />}
+        <PayPalButtons
+          style={style}
+          disabled={false}
+          forceReRender={[amount, currency, style]}
+          fundingSource={undefined}
+          createOrder={(data, actions) => {
+            return actions.order
+              .create({
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: currency,
+                      value: amount,
                     },
-                  ],
-                })
-                .then((orderId) => {
-                  // Your code here after create the order
-                });
-            }}
-            onApprove={function (data, actions) {
-              return actions.order.capture().then(function (details) {
-
+                  },
+                ],
+              })
+              .then((orderId) => {
+                // Your code here after create the order
               });
-            }}
-          />
-        </div>
-      );
-    };
-
-
+          }}
+          onApprove={function (data, actions) {
+            return actions.order.capture().then(function (details) {});
+          }}
+        />
+      </div>
+    );
+  };
 
   return (
     <div className="flex pageMargin flex-col lg:flex-row mx-auto lg:m-0">

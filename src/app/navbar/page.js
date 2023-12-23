@@ -1,6 +1,4 @@
-
-
-"use client"
+"use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -9,11 +7,11 @@ import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { CgMenu } from "react-icons/cg";
 import { FaTimes } from "react-icons/fa";
-import  {UsingCart}  from "../cartContext/page.js";
+import { UsingCart } from "../cartcontext/page.js";
 
 const Navbar = () => {
   const { cartItems } = UsingCart();
-  const router = useRouter()
+  const router = useRouter();
   const [showMobileContent, setShowMobileContent] = useState(false);
   const [quantity, setQuantity] = useState(0);
 

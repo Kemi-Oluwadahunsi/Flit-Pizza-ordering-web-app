@@ -1,11 +1,10 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { useState } from "react";
-import  {UsingCart} from "./cartContext/page.js";
+import { UsingCart } from "./cartcontext/page.js";
 
 export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
   const { addToCart, removeFromCart, clearCart, cartItems } = UsingCart();
-
 
   const pizza1 = {
     category: "Chicken, Launch, Pizza, Burger",
@@ -16,7 +15,6 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
   const [size, setSize] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [extras, setExtras] = useState([]);
-  
 
   const handleSize = (sizeIndex) => {
     setSize(sizeIndex);
@@ -55,13 +53,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
       <section className="pageMargin">
         <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-10 mt-32">
           <section className="h-full align-middle justify-center">
-            <Image
-              src={img}
-              alt={`${title} image`}
-              width={600}
-              height={600}
-           
-            />
+            <Image src={img} alt={`${title} image`} width={600} height={600} />
           </section>
 
           <section className="flex-1 lg:pt-3 text-start">

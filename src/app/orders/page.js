@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import styles from '../orders/orders.module.css'
-import { FaCircleCheck } from "react-icons/fa6"; 
-import UsingCart from "../cartContext/page.js";
-import ordersApi from '../pizzas'
-import axios from "axios"
+import styles from "../orders/orders.module.css";
+import { FaCircleCheck } from "react-icons/fa6";
+import UsingCart from "../cartcontext/page.js";
+import ordersApi from "../pizzas";
+import axios from "axios";
 
 const Order = () => {
   const { cartItems } = UsingCart();
@@ -54,7 +54,7 @@ const Order = () => {
     //     console.error("Error updating order:", error);
     //     setLoading(false);
     //   });
-  }, []); 
+  }, []);
 
   const calculateSubtotal = (cartItems) => {
     const subtotal = cartItems.reduce(
