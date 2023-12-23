@@ -22,7 +22,7 @@ function Homepage({ setClose, pproducts }) {
 
   useEffect(() => {
     // Client-side code
-    
+    if (typeof window !== "undefined") {
       const strengthIntervalId = setInterval(() => {
         if (owlRefStrength.current) {
           owlRefStrength.current.next();
@@ -40,8 +40,8 @@ function Homepage({ setClose, pproducts }) {
         clearInterval(strengthIntervalId);
         clearInterval(testimonialsIntervalId);
       };
-    
-  }, []);
+    }
+  }, [pproducts]);
 
   const owlCarouselOptions = {
     loop: true,
@@ -83,6 +83,7 @@ function Homepage({ setClose, pproducts }) {
       />
     </div>
   ));
+
 
   return (
     <>
@@ -256,14 +257,14 @@ function Homepage({ setClose, pproducts }) {
             Clients Testimonials
           </h2>
 
-          <div>
-            <ReactOwlCarousel
-              className="owl-theme"
-              ref={owlRefTestimonials}
-              {...owlCarouselOptions}
-            >
-              {Feedback}
-            </ReactOwlCarousel>
+          <div >
+          <ReactOwlCarousel
+            className="owl-theme"
+            ref={owlRefTestimonials}
+            {...owlCarouselOptions}
+          >
+            {Feedback}
+          </ReactOwlCarousel>
           </div>
         </section>
       </section>
