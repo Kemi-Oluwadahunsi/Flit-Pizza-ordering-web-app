@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
 import Specials from "/src/app/Specials";
@@ -14,16 +14,11 @@ import Link from "next/link.js";
 import ReactOwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import { useState, useEffect, useRef } from "react";
-
-
-
 
 function Homepage({ setClose, pproducts }) {
   const owlRefStrength = useRef(null);
   const owlRefTestimonials = useRef(null);
-   const [products, setProducts] = useState(pproducts);
-
+  const [products, setProducts] = useState(pproducts);
 
   useEffect(() => {
     // Client-side code
@@ -48,8 +43,6 @@ function Homepage({ setClose, pproducts }) {
     }
   }, []);
 
-
-
   const owlCarouselOptions = {
     loop: true,
     margin: 10,
@@ -68,11 +61,7 @@ function Homepage({ setClose, pproducts }) {
     },
   };
 
-
-  
-  console.log(pproducts);
-    const Cadd = products.map((item) => (
-      
+  const Cadd = products.map((item) => (
     <Link key={item._id} href={`/products/${item._id}`} passHref>
       <Specials
         id={item._id}
@@ -267,14 +256,14 @@ function Homepage({ setClose, pproducts }) {
             Clients Testimonials
           </h2>
 
-          <div >
-          <ReactOwlCarousel
-            className="owl-theme"
-            ref={owlRefTestimonials}
-            {...owlCarouselOptions}
-          >
-            {Feedback}
-          </ReactOwlCarousel>
+          <div>
+            <ReactOwlCarousel
+              className="owl-theme"
+              ref={owlRefTestimonials}
+              {...owlCarouselOptions}
+            >
+              {Feedback}
+            </ReactOwlCarousel>
           </div>
         </section>
       </section>
