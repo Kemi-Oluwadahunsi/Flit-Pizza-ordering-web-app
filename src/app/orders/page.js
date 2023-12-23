@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import styles from '../orders/orders.module.css'
 import { FaCircleCheck } from "react-icons/fa6"; 
-import { useCart } from "../cartContext/page";
+import { useCart } from "@/app/cartContext/page";
 import ordersApi from '../pizzas'
 import axios from "axios"
 
