@@ -11,18 +11,20 @@ import { PiFan } from "react-icons/pi";
 import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import Link from "next/link.js";
-import $ from "jquery";
-import OwlCarousel from "react-owl-carousel";
+import ReactOwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
-import dynamic from "next/dynamic";
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import { useMemo, useState, useEffect, useRef } from "react";
+
+
 
 
 function Homepage({ setClose, pproducts }) {
   const owlRefStrength = useRef(null);
   const owlRefTestimonials = useRef(null);
+  const products = useMemo(() => pproducts, [pproducts]);
+
+
 
   useEffect(() => {
     const strengthIntervalId = setInterval(() => {
@@ -42,7 +44,9 @@ function Homepage({ setClose, pproducts }) {
       clearInterval(strengthIntervalId);
       clearInterval(testimonialsIntervalId);
     };
-  }, []);
+  }, [pproducts]);
+
+  
 
 
   const owlCarouselOptions = {
@@ -63,7 +67,7 @@ function Homepage({ setClose, pproducts }) {
     },
   };
 
-  const [products, setProducts] = useState(pproducts);
+
   
   console.log(pproducts);
     const Cadd = products.map((item) => (
@@ -209,7 +213,7 @@ function Homepage({ setClose, pproducts }) {
           />
 
           <section className=" mt-10 lg:mt-16">
-            <OwlCarousel
+            <ReactOwlCarousel
               className="owl-theme"
               ref={owlRefStrength}
               {...owlCarouselOptions}
@@ -249,7 +253,7 @@ function Homepage({ setClose, pproducts }) {
                   typesetting industry
                 </p>
               </div>
-            </OwlCarousel>
+            </ReactOwlCarousel>
           </section>
         </section>
         <section className="px-4 lg:px-10  mt-10 lg:mt-28">
@@ -263,13 +267,13 @@ function Homepage({ setClose, pproducts }) {
           </h2>
 
           <div >
-          <OwlCarousel
+          <ReactOwlCarousel
             className="owl-theme"
             ref={owlRefTestimonials}
             {...owlCarouselOptions}
           >
             {Feedback}
-          </OwlCarousel>
+          </ReactOwlCarousel>
           </div>
         </section>
       </section>
