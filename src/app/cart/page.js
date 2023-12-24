@@ -25,7 +25,6 @@ const Page = () => {
   });
 
   const cashOnDeliveryRef = useRef(null);
-   const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
 
   const closeCashOnDelivery = () => {
     setIsCashOnDeliveryVisible(false);
@@ -51,7 +50,7 @@ const Page = () => {
         document.removeEventListener("mousedown", handleClickOutside);
       };
     }
-  }, [isCashOnDeliveryVisible, dispatch, options]);
+  }, [isCashOnDeliveryVisible]);
 
   const calculateSubtotal = (cartItems) => {
     const subtotal = cartItems.reduce(
