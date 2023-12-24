@@ -51,7 +51,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
   return (
     <>
       <section className="pageMargin">
-        <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-10 mt-32">
+        <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-10 mt-32 lg:mt-10">
           <section className="h-full align-middle justify-center">
             <Image src={img} alt={`${title} image`} width={600} height={600} />
           </section>

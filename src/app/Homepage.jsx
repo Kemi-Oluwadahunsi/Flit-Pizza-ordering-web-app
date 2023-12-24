@@ -12,6 +12,7 @@ import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import Link from "next/link.js";
 import ReactOwlCarousel from "react-owl-carousel";
+import Slider from "./slider";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 
@@ -43,24 +44,24 @@ function Homepage({ setClose, pproducts }) {
     }
   }, [pproducts]);
 
-  const owlCarouselOptions = {
-    loop: true,
-    margin: 10,
-    nav: true,
-    dots: true,
-    responsive: {
-      0: {
-        items: 1,
+    const owlCarouselOptions = {
+      loop: true,
+      margin: 10,
+      nav: true,
+      dots: true,
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 3,
+        },
+        1000: {
+          items: 5,
+        },
       },
-      600: {
-        items: 3,
-      },
-      1000: {
-        items: 5,
-      },
-    },
-  };
-
+    };
+  
   const Cadd = products.map((item) => (
     <Link key={item._id} href={`/products/${item._id}`} passHref>
       <Specials
@@ -204,11 +205,13 @@ function Homepage({ setClose, pproducts }) {
           />
 
           <section className=" mt-10 lg:mt-16">
+          {typeof window !== "undefined" && (
             <ReactOwlCarousel
               className="owl-theme"
               ref={owlRefStrength}
               {...owlCarouselOptions}
             >
+              <Slider/>
               <div className="flex flex-col gap-4">
                 <BiBowlRice className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
@@ -245,6 +248,7 @@ function Homepage({ setClose, pproducts }) {
                 </p>
               </div>
             </ReactOwlCarousel>
+            )}
           </section>
         </section>
         <section className="px-4 lg:px-10  mt-10 lg:mt-28">
@@ -257,14 +261,17 @@ function Homepage({ setClose, pproducts }) {
             Clients Testimonials
           </h2>
 
-          <div >
-          <ReactOwlCarousel
-            className="owl-theme"
-            ref={owlRefTestimonials}
-            {...owlCarouselOptions}
-          >
-            {Feedback}
-          </ReactOwlCarousel>
+          <div>
+            {typeof window !== "undefined" && (
+              <ReactOwlCarousel
+                className="owl-theme"
+                ref={owlRefTestimonials}
+                {...owlCarouselOptions}
+              >
+                {Feedback}
+                <Slider />
+              </ReactOwlCarousel>
+            )}
           </div>
         </section>
       </section>
