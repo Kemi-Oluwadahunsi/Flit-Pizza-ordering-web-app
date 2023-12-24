@@ -11,56 +11,54 @@ import { PiFan } from "react-icons/pi";
 import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import Link from "next/link.js";
-import ReactOwlCarousel from "react-owl-carousel";
-import Slider from "./slider";
-import "owl.carousel/dist/assets/owl.carousel.css";
-import "owl.carousel/dist/assets/owl.theme.default.css";
+// import ReactOwlCarousel from "react-owl-carousel";
+// import Slider from "./slider";
+// import "owl.carousel/dist/assets/owl.carousel.css";
+// import "owl.carousel/dist/assets/owl.theme.default.css";
 
 function Homepage({ setClose, pproducts }) {
-  const owlRefStrength = useRef(null);
-  const owlRefTestimonials = useRef(null);
+  // const owlRefStrength = useRef(null);
+  // const owlRefTestimonials = useRef(null);
   const [products, setProducts] = useState(pproducts);
 
-  useEffect(() => {
-    // Client-side code
-    if (typeof window !== "undefined") {
-      const strengthIntervalId = setInterval(() => {
-        if (owlRefStrength.current) {
-          owlRefStrength.current.next();
-        }
-      }, 2000);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     const strengthIntervalId = setInterval(() => {
+  //       if (owlRefStrength.current) {
+  //         owlRefStrength.current.next();
+  //       }
+  //     }, 2000);
 
-      const testimonialsIntervalId = setInterval(() => {
-        if (owlRefTestimonials.current) {
-          owlRefTestimonials.current.next();
-        }
-      }, 2000);
+  //     const testimonialsIntervalId = setInterval(() => {
+  //       if (owlRefTestimonials.current) {
+  //         owlRefTestimonials.current.next();
+  //       }
+  //     }, 2000);
 
-      // Clear the intervals when the component unmounts
-      return () => {
-        clearInterval(strengthIntervalId);
-        clearInterval(testimonialsIntervalId);
-      };
-    }
-  }, [pproducts]);
+  //     return () => {
+  //       clearInterval(strengthIntervalId);
+  //       clearInterval(testimonialsIntervalId);
+  //     };
+  //   }
+  // }, [pproducts]);
 
-    const owlCarouselOptions = {
-      loop: true,
-      margin: 10,
-      nav: true,
-      dots: true,
-      responsive: {
-        0: {
-          items: 1,
-        },
-        600: {
-          items: 3,
-        },
-        1000: {
-          items: 5,
-        },
-      },
-    };
+  //   const owlCarouselOptions = {
+  //     loop: true,
+  //     margin: 10,
+  //     nav: true,
+  //     dots: true,
+  //     responsive: {
+  //       0: {
+  //         items: 1,
+  //       },
+  //       600: {
+  //         items: 3,
+  //       },
+  //       1000: {
+  //         items: 5,
+  //       },
+  //     },
+  //   };
   
   const Cadd = products.map((item) => (
     <Link key={item._id} href={`/products/${item._id}`} passHref>
@@ -205,13 +203,13 @@ function Homepage({ setClose, pproducts }) {
           />
 
           <section className=" mt-10 lg:mt-16">
-          {typeof window !== "undefined" && (
+          {/* {typeof window !== "undefined" && (
             <ReactOwlCarousel
               className="owl-theme"
               ref={owlRefStrength}
               {...owlCarouselOptions}
             >
-              <Slider/>
+              <Slider/> */}
               <div className="flex flex-col gap-4">
                 <BiBowlRice className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
@@ -247,8 +245,8 @@ function Homepage({ setClose, pproducts }) {
                   typesetting industry
                 </p>
               </div>
-            </ReactOwlCarousel>
-            )}
+            {/* </ReactOwlCarousel>
+            )} */}
           </section>
         </section>
         <section className="px-4 lg:px-10  mt-10 lg:mt-28">
@@ -262,16 +260,16 @@ function Homepage({ setClose, pproducts }) {
           </h2>
 
           <div>
-            {typeof window !== "undefined" && (
+            {/* {typeof window !== "undefined" && (
               <ReactOwlCarousel
                 className="owl-theme"
                 ref={owlRefTestimonials}
                 {...owlCarouselOptions}
-              >
+              > */}
                 {Feedback}
-                <Slider />
+                {/* <Slider />
               </ReactOwlCarousel>
-            )}
+            )} */}
           </div>
         </section>
       </section>
