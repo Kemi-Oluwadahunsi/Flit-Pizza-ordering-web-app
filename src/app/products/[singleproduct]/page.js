@@ -6,7 +6,6 @@ export async function generateStaticParams() {
       "https://pizza-ordering-anno.onrender.com/api/products"
     ).then((res) => res.json());
 
-    // Check if products is an array before using map
     if (Array.isArray(products)) {
       return products.map((product) => ({
         singleproduct: product.singleproduct,
@@ -33,19 +32,6 @@ async function getProduct(singleproduct) {
     return null;
   }
 }
-
-//   return products.map((product) => ({
-//     singleproduct: product.singleproduct,
-//   }));
-// }
-
-//  async function getProduct(singleproduct) {
-//   const res = await fetch(
-//     `https://pizza-ordering-anno.onrender.com/api/products/${singleproduct}`)
-//     const data = await res.json();
-//     return data
-  
-//  }
 
 const Productpage = async ({ params }) => {
   const product = await getProduct(params.singleproduct)

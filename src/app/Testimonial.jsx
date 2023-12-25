@@ -6,9 +6,9 @@ const Testimonials = (props) => {
     return (
       <>
         <div className=''>
-          <div className=" border-2 border-gray-300 p-6 rounded-lg  cursor-pointer ">
+          <div className=" border-2 border-gray-300 p-6  rounded-lg cursor-pointer  ">
             <a href={props.linked} target="_blank" rel="noopener noreferrer">
-              <section className="bg-white   grid lg:grid-rows-2 mb-4 rounded-lg">
+              <section className="bg-white grid lg:grid-rows-2 mb-4 rounded-lg">
                 <div className=" place-self-center">
                   <Image
                     width={120}

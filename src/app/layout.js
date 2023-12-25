@@ -9,15 +9,20 @@ import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
-{
-  /* <Head>
-    <Link rel="stylesheet" href="owlcarousel/owl.carousel.min.css" />
-    <Link rel="stylesheet" href="owlcarousel/owl.theme.default.min.css" />
-</Head> */
-}
+
+  <Head>
+    <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/images/pizzona.png"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </Head>;
+
 
 export const metadata = {
-  title: "Pizzon food project",
+  title: "Pizza-Orderng-App",
   description: "A food app to order for Pizza of different sizes and flavors",
   imageUrl: "/images/pizza-logo_afsvzn.png",
 };
