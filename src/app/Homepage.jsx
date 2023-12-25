@@ -22,13 +22,29 @@ import Slider from "react-slick";
    slidesToShow: 3,
    slidesToScroll: 1,
    autoplay: true,
-   speed: 3500,
+   speed: 3000,
    autoplaySpeed: 3000,
    cssEase: "linear",
+   responsive: [
+     {
+       breakpoint: 768, // for tablets and small screens
+       settings: {
+         slidesToShow: 2,
+         slidesToScroll: 1,
+       },
+     },
+     {
+       breakpoint: 500, // for mobile
+       settings: {
+         slidesToShow: 1,
+         slidesToScroll: 1,
+       },
+     },
+   ],
  };
 
-const TestimonialsSlider = ({ testimonials }) => {
- 
+
+const TestimonialsSlider = ({ testimonials }) => { 
 
   return (
     <section className="py-10" style={{ overflow: "hidden" }}>
@@ -181,12 +197,12 @@ function Homepage({ setClose, pproducts }) {
             className="absolute right-0  mtop hidden lg:block :mb-20"
           />
 
-          <section className=" mt-10 lg:mt-16">
+          <section className=" mt-10 lg:mt-16 ">
             <Slider {...settings}>
               <div className="flex flex-col gap-4">
                 <BiBowlRice className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
-                <p className="text-md">
+                <p className="text-md w-4/5">
                   Lorem Ipsum is simply dummy text of the <br></br>printing and
                   typesetting industry
                 </p>
@@ -195,7 +211,7 @@ function Homepage({ setClose, pproducts }) {
               <div className="flex flex-col gap-4">
                 <PiFan className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
-                <p className="text-md">
+                <p className="text-md w-4/5">
                   Lorem Ipsum is simply dummy text of the <br></br>printing and
                   typesetting industry
                 </p>
@@ -204,7 +220,7 @@ function Homepage({ setClose, pproducts }) {
               <div className="flex flex-col gap-4">
                 <LuLaugh className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
-                <p className="text-md">
+                <p className="text-md w-4/5">
                   Lorem Ipsum is simply dummy text of the <br></br>printing and
                   typesetting industry
                 </p>
@@ -213,7 +229,7 @@ function Homepage({ setClose, pproducts }) {
               <div className="flex flex-col gap-4">
                 <SlLocationPin className="text-5xl text-red-400" />
                 <h5 className="font-extrabold text-lg">All Kinds of Foods</h5>
-                <p className="text-md">
+                <p className="text-md w-4/5">
                   Lorem Ipsum is simply dummy text of the <br></br>printing and
                   typesetting industry
                 </p>
