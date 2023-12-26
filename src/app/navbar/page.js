@@ -47,7 +47,7 @@ const Navbar = () => {
             className="ml-4 lg:ml-2  lg:w-4/6 lg:h-28"
           />
         </div>
-        <div className="lg:hidden relative w-10 h-10 top-2 left-[9.5rem] sm:left-60 md:left-72 flex items-center">
+        <div className="lg:hidden relative w-10 h-10 top-2 left-[9rem] sm:left-60 md:left-72 flex items-center">
           <button
             onClick={toggleMobileContent}
             className="text-black underline text-3xl md:text-4xl fixMenu"

@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <div className="flex align-middle justify-center h-screen pageMargin ">
-      <div className="flex flex-col justify-start pt-16 align-middle">
+      <div className="flex flex-col justify-start pt-32 lg:pt-16 align-middle">
         <h1 className="font-semibold text-3xl pb-4 text-center">Admin Dashboard</h1>
         <input
           placeholder="username"
