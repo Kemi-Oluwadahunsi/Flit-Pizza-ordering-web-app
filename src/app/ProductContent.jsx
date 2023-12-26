@@ -52,7 +52,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
     <>
       <section className="pageMargin">
         <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-10 mt-32 lg:mt-10">
-          <section className="h-full align-middle justify-center">
+          <section className="h-full align-middle justify-center ">
             <Image src={img} alt={`${title} image`} width={600} height={600} />
           </section>
 
@@ -87,7 +87,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
                   Small
                 </span>
                 <Image
-                  src="/images/pizza-size.svg"
+                  src="/images/pizza-size.png"
                   alt="small size"
                   className=""
                   width={50}
@@ -103,7 +103,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
                   Medium
                 </span>
                 <Image
-                  src="/images/pizza-size.svg"
+                  src="/images/pizza-size.png"
                   alt="medium size"
                   className=""
                   width={70}
@@ -119,7 +119,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
                   Large
                 </span>
                 <Image
-                  src="/images/pizza-size.svg"
+                  src="/images/pizza-size.png"
                   alt="large size"
                   className=""
                   width={85}

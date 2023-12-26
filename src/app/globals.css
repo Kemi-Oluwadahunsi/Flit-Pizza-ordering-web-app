@@ -77,6 +77,10 @@
   width: 40px
 }
 
+.noZindex{
+  z-index: -9999;
+}
+
 @media screen and (min-width:440px) and (max-width: 767px) {
   .fixCart{
     right: 6rem;
@@ -86,3 +90,4 @@
     left: 25rem;
   }
 }
+
