@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title:
-    "Pizza-Orderng-App: A food app to order for Pizza of different sizes and flavors"
+    "Pizza-Ordering-App: A food app to order for Pizza of different sizes and flavors"
 };
 
 export default function RootLayout({ children }) {
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/x-icon" href="/images/pizzona.png" />
+        <link rel="icon" href="/images/pizzona.png" />
       </head>
       <body className={inter.className}>
         
