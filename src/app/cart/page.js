@@ -4,16 +4,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styles from "./cash.module.css";
 import { UsingCart } from "../cartcontext.js";
+// require("dotenv").config();
 
-import {
-  PayPalScriptProvider,
-  PayPalButtons,
-  usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import PayPalPayment from "../payPalPayment";
 
 const Page = () => {
-  const currency = "USD";
-  const style = { layout: "vertical" };
+  
+  const initialOptions = {
+    clientId:
+      "AQ6gBbAqk7wBLVB5EIPBW8hRt6zNgB0Xh4ItYWn2dpBOrkOt_JgJ-LHNxBh7haGMd4LFTrMdkVQ1JQdS",
+    currency: "USD",
+    intent: "capture",
+    "disable-funding": "credit,card,p24",
+  };
 
   const { cartItems, clearCart } = UsingCart();
   const [open, setOpen] = useState(false);
@@ -32,7 +36,7 @@ const Page = () => {
 
   useEffect(() => {
     // Check if window is defined before using it
-    if (typeof window !== "undefined") {
+    // if (typeof window !== "undefined") {
       const handleClickOutside = (event) => {
         if (
           cashOnDeliveryRef.current &&
@@ -49,7 +53,7 @@ const Page = () => {
       return () => {
         document.removeEventListener("mousedown", handleClickOutside);
       };
-    }
+    // }
   }, [isCashOnDeliveryVisible]);
 
   const calculateSubtotal = (cartItems) => {
@@ -75,9 +79,9 @@ const Page = () => {
   };
 
   const calculateTotal = (cartItems) => {
-    if (typeof window !== "undefined") {
+    // if (typeof window !== "undefined") {
       return calculateSubtotal(cartItems);
-    }
+    // }
   };
 
   const toggleCashOnDelivery = () => {
@@ -96,54 +100,6 @@ const Page = () => {
 
     console.log("Attempting to navigate to /orders");
     router.push("/orders");
-  };
-
-  // Custom component to wrap the PayPalButtons and handle currency changes
-  const ButtonWrapper = ({ currency, showSpinner }) => {
-    // usePayPalScriptReducer can be use only inside children of PayPalScriptProviders
-    // This is the main reason to wrap the PayPalButtons in a new component
-    const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-
-    useEffect(() => {
-      dispatch({
-        type: "resetOptions",
-        value: {
-          ...options,
-          currency: currency,
-        },
-      });
-    }, [currency, showSpinner,dispatch, options]);
-
-    return (
-      <div>
-        {showSpinner && isPending && <div className="spinner" />}
-        <PayPalButtons
-          style={style}
-          disabled={false}
-          forceReRender={[amount, currency, style]}
-          fundingSource={undefined}
-          createOrder={(data, actions) => {
-            return actions.order
-              .create({
-                purchase_units: [
-                  {
-                    amount: {
-                      currency_code: currency,
-                      value: amount,
-                    },
-                  },
-                ],
-              })
-              .then((orderId) => {
-                // Your code here after create the order
-              });
-          }}
-          onApprove={function (data, actions) {
-            return actions.order.capture().then(function (details) {});
-          }}
-        />
-      </div>
-    );
   };
 
   return (
@@ -168,7 +124,7 @@ const Page = () => {
                 key={product.id}
               >
                 <td className="ml-7">
-                  <div className=" w-100 h-100 relative">
+                  {/* <div className=" w-100 h-100 relative"> */}
                     <Image
                       src={product.img}
                       width={100}
@@ -176,7 +132,7 @@ const Page = () => {
                       alt=""
                       className="ml-10"
                     />
-                  </div>
+                  {/* </div> */}
                 </td>
 
                 <td>
@@ -210,23 +166,21 @@ const Page = () => {
           </tbody>
         </table>
       </div>
-      <div className="lg:hidden flex align-middle justify-center flex-1 w-screen leading-7">
+      <div className="lg:hidden flex align-middle justify-center flex-1 w-screen leading-7 pageMargin mt-28 border-0">
         <table className="flex flex-col -m-12">
           {cartItems.map((product) => (
             <tr
-              className="flex flex-col border border-t-1 border-b-1 border-l-0 border-r-0 text-center"
+              className="flex flex-col text-center"
               key={product.id}
             >
               <td className="mx-auto">
-                <div className=" w-100 h-100 relative">
                   <Image
                     src={product.img}
                     width={100}
                     height={100}
                     alt="pizza image"
-                    className="w-44 md:w-60"
+                    className="w-44 md:w-6 "
                   />
-                </div>
               </td>
 
               <td>
@@ -260,8 +214,8 @@ const Page = () => {
         </table>
       </div>
 
-      <div className="flex flex-1 justify-center mt-7">
-        <div className="flex flex-col w-7/12 md:w-2/4 lg:w-2/3 max-h-80 text-white bg-slate-800 p-5">
+      <div className="flex flex-1 justify-center mt-20 lg:mt-7">
+        <div className="flex flex-col w-3/4 md:w-2/4 lg:w-2/3 max-h-80 text-white bg-slate-800 p-5">
           <h2 className="font-extrabold text-xl mb-7 pt-5">CART TOTAL</h2>
           <div className="">
             <b className="mr-5">Subtotal:</b>${calculateSubtotal(cartItems)}
@@ -343,18 +297,10 @@ const Page = () => {
               )}
 
               {/* Uncomment the following code if you want to include PayPal integration */}
-
-              <PayPalScriptProvider
-                options={{
-                  "client-id":
-                    "Ac5uI5c-088mB0qtPddSpQOtt1uknUG4eEulCBHl_3Ki8EgDbZ33eh7_4QenutkLV7RqKyidKMj0Kylq",
-                  components: "buttons",
-                  currency: "USD",
-                  "disable-funding": "credit,card,p24",
-                }}
-              >
-                <ButtonWrapper currency={currency} showSpinner={false} />
-              </PayPalScriptProvider>
+              
+               <PayPalScriptProvider options={initialOptions} >
+                  <PayPalPayment />
+               </PayPalScriptProvider>
             </div>
           ) : (
             <button

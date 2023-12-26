@@ -11,10 +11,10 @@ import { PiFan } from "react-icons/pi";
 import { LuLaugh } from "react-icons/lu";
 import { SlLocationPin } from "react-icons/sl";
 import Link from "next/link.js";
-// Import slick-carousel styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useRouter } from "next/navigation";
 
  const settings = {
    dots: true,
@@ -66,6 +66,11 @@ const TestimonialsSlider = ({ testimonials }) => {
 
 function Homepage({ setClose, pproducts }) {
   const [products, setProducts] = useState(pproducts);
+  const router = useRouter()
+
+  const handleClick = () => {
+    router.push('/products');
+  }
 
   const Cadd = products.map((item) => (
     <Link key={item._id} href={`/products/${item._id}`} passHref>
@@ -98,9 +103,9 @@ function Homepage({ setClose, pproducts }) {
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
               </h4>
-              <button className="bg-yellow-500 lg:text-lg text-white flex flex-row text-center  px-2 lg:px-8  gap-1  py-2 lg:py-4 mt-4  rounded-full w-36 lg:w-52">
+              <button className="bg-yellow-500 lg:text-lg text-white flex flex-row text-center  px-2 lg:px-8  gap-1  py-2 lg:py-4 mt-4  rounded-full w-36 lg:w-56">
                 <FaCartShopping className=" mt-1 mx-auto" />
-                <span className="mx-auto">ORDER NOW</span>
+                <span className="mx-auto" onClick={handleClick}>ORDER NOW</span>
               </button>
             </div>
           </div>
