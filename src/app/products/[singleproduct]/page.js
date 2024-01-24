@@ -3,6 +3,7 @@ import { ProductContent } from "@/app/ProductContent";
 export async function generateStaticParams() {
   try {
     const products = await fetch(
+      // "https://pizza-ordering-anno.onrender.com/api/products"
       "https://pizza-ordering-anno.onrender.com/api/products"
     ).then((res) => res.json());
 

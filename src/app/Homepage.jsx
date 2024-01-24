@@ -184,7 +184,8 @@ function Homepage({ setClose, pproducts }) {
           </h2>
 
           <div className=" mt-7 lg:mt-10 grid grid-rows-1 md:grid-cols-2 lg:grid-cols-3  md:w-11/12  lg:w-full md:mx-auto lg:mx-0 lg:px-6  gap-6 md:gap-5 lg:gap-16">
-            {Cadd} {Cadd} {Cadd}
+            {Cadd} 
+            
           </div>
         </section>
         <section className=" py-10 lg:py-20 px-4 lg:px-10 bg-yellow-50 lg:mt-16 h-3/4 ">

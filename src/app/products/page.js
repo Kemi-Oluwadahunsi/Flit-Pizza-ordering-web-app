@@ -3,6 +3,7 @@ import ProductsClientSide from "../Products-clientsSide";
 
 const baseUrl = "https://pizza-ordering-anno.onrender.com/api/products";
 
+
 const getProductsData = async () => {
   const res = await fetch(baseUrl);
   return res.json();

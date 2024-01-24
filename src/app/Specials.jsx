@@ -11,15 +11,15 @@ const Specials = ({img, linked, menu, price,description}) => {
             <section className="bg-white grid  lg:grid-rows-2  rounded-lg">
               <div className=" place-self-center">
                 <Image
-                  width={250}
-                  height={150}
+                  width={400}
+                  height={200}
                   className="mt-5 lg:mt-0"
                   src={img}
                   alt={`${menu} Image`}
                 />
               </div>
 
-              <div className=" flex flex-col lg:gap-6  p-3 lg:p-6 lg:mt-1">
+              <div className=" flex flex-col lg:gap-4  p-3 lg:p-6 lg:mt-1">
                 <div className="grid grid-cols-2 gap-16 lg:gap-10">
                   <h2 className="lg:text-xl ">{menu}</h2>
                   <span className="love"> ${price} </span>
