@@ -2,6 +2,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { UsingCart } from "./cartcontext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
   const { addToCart, removeFromCart, clearCart, cartItems } = UsingCart();
@@ -33,7 +35,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
     }
   };
 
-  const handleClick = (products) => {
+  const handleClick = () => {
     const extrasText = extras.map((extra) => extra.text);
     const productToAdd = {
       ...pizza1,
@@ -46,12 +48,13 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
 
     addToCart(productToAdd);
     console.log("Product added to cart:", productToAdd);
+    toast.success("Product added to cart!");
   };
 
   return (
     <>
       <section className="pageMargin">
-        <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-10 mt-32 lg:mt-10">
+        <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-[10em] mt-32 lg:mt-10">
           <section className="h-full align-middle justify-center ">
             <Image src={img} alt={`${title} image`} width={600} height={600} />
           </section>
@@ -148,7 +151,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
                 </div>
               ))}
             </div>
-            <div className=" flex flex-row place-items-center lg:w-3/4 mt-5 lg:mt-6">
+            <div className=" flex flex-row place-items-center justify-between lg:w-full mt-5 lg:mt-6">
               <div className="">
                 <input
                   onChange={(e) => setQuantity(e.target.value)}
@@ -158,12 +161,12 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
                 />
               </div>
               <button
-                className="cartButton h-14 lg:px-20 mx-auto lg:ml-7 my-4 lg:mt-0 bg-yellow-500 text-white font-bold text-sm md:text-xl rounded-full hover:bg-red-600"
+                className="cartButton h-14 lg:px-10 mx-auto lg:ml-7 my-4 lg:mt-0 bg-yellow-500 text-white font-bold text-sm md:text-xl rounded-full hover:bg-red-600"
                 onClick={handleClick}
               >
                 ADD TO CART
               </button>
-              <button className="block lg:inline border border-gray-400 w-10 md:w-14 lg:w-20 h-10 md:h-14 lg:h-20 rounded-full lg:text-start mx-auto lg:mx-0">
+              <button className="block lg:inline border border-gray-400 w-10 md:w-14 lg:w-18 h-10 md:h-14 lg:h-18 rounded-full lg:text-start mx-auto lg:mx-0">
                 <Image
                   src="/images/heart-click.svg"
                   alt="like button"
@@ -175,6 +178,9 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
             </div>
           </section>
         </section>
+        <div className="z-[10000] pt-[20em]">
+          <ToastContainer position="top-right" autoClose={5000} />
+        </div>
       </section>
     </>
   );

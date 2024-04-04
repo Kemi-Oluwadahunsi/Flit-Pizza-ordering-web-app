@@ -2,18 +2,21 @@
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./cash.module.css";
 import { UsingCart } from "../cartcontext.js";
-// require("dotenv").config();
-
+// import resetCart  from "../redux/cartSlice";
+import { useContext } from "react";
+import axios from "axios";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import PayPalPayment from "../payPalPayment";
+import Paypal from "../payPalPayment";
 
 const Page = () => {
-  
+  // const { postOrder } = useContext(ProductsContext);
+
   const initialOptions = {
     clientId:
-      "AQ6gBbAqk7wBLVB5EIPBW8hRt6zNgB0Xh4ItYWn2dpBOrkOt_JgJ-LHNxBh7haGMd4LFTrMdkVQ1JQdS",
+      "AYeX3NUN2fiJUeyAtI1SIIGSYTDc5priT_Sqx8MeLPiA89-AoSaQqXLY1FqOSwxAlFahPCCZhzus7ktx",
     currency: "USD",
     intent: "capture",
     "disable-funding": "credit,card,p24",
@@ -37,22 +40,22 @@ const Page = () => {
   useEffect(() => {
     // Check if window is defined before using it
     // if (typeof window !== "undefined") {
-      const handleClickOutside = (event) => {
-        if (
-          cashOnDeliveryRef.current &&
-          !cashOnDeliveryRef.current.contains(event.target)
-        ) {
-          closeCashOnDelivery();
-        }
-      };
-
-      if (isCashOnDeliveryVisible) {
-        document.addEventListener("mousedown", handleClickOutside);
+    const handleClickOutside = (event) => {
+      if (
+        cashOnDeliveryRef.current &&
+        !cashOnDeliveryRef.current.contains(event.target)
+      ) {
+        closeCashOnDelivery();
       }
+    };
 
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
+    if (isCashOnDeliveryVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
     // }
   }, [isCashOnDeliveryVisible]);
 
@@ -64,12 +67,7 @@ const Page = () => {
     return subtotal.toFixed(2);
   };
 
-  const amount = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
-
-  const router = useRouter();
+  //
 
   const handleInputChange = (e) => {
     setUserDetails({
@@ -80,7 +78,7 @@ const Page = () => {
 
   const calculateTotal = (cartItems) => {
     // if (typeof window !== "undefined") {
-      return calculateSubtotal(cartItems);
+    return calculateSubtotal(cartItems);
     // }
   };
 
@@ -88,18 +86,68 @@ const Page = () => {
     setIsCashOnDeliveryVisible(!isCashOnDeliveryVisible);
   };
 
-  const cashOrder = () => {
-    const totalCashOnDelivery = cartItems.reduce(
-      (total, product) => total + product.price * product.quantity,
-      0
-    );
+  const amount = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
+  // const currency = "USD";
+  // const style = { layout: "vertical" };
+  // const dispatch = useDispatch();
+  const router = useRouter();
 
-    console.log("Total Cash on Delivery:", totalCashOnDelivery);
+  // const cashOrder = async () => {
+  //   // const totalCashOnDelivery = cartItems.reduce(
+  //   //   (total, product) => total + product.price * product.quantity,
+  //   //   0
+  //   // );
 
-    clearCart();
+  //   const totalCashOnDelivery = calculateSubtotal(cartItems);
+  //   // Prepare order details
+  //   const orderDetails = {
+  //     customer: userDetails.customer,
+  //     address: userDetails.address,
+  //     total: totalCashOnDelivery,
+  //     status: 0,
+  //     method: 0,
+  //     // Add any other necessary fields
+  //   };
+  //   try {
+  //     // Post order details to the backend
+  //     const response = await postOrder(orderDetails);
 
-    console.log("Attempting to navigate to /orders");
-    router.push("/orders");
+  //     // Clear the cart after successful order placement
+  //     clearCart();
+
+  //     // Navigate to the orders page
+  //     router.push("/orders");
+  //   } catch (error) {
+  //     console.error("Error placing cash order:", error.response.data);
+  //     // Handle error appropriately
+  //   }
+  // };
+
+  const cashOrder = async () => {
+    const totalCashOnDelivery = calculateSubtotal(cartItems);
+    const orderDetails = {
+      customer: userDetails.customer,
+      address: userDetails.address,
+      total: totalCashOnDelivery,
+      status: 0,
+      method: 0,
+    };
+
+    try {
+      const response = await axios.post(
+        "https://pizza-ordering-anno.onrender.com/api/orders",
+        orderDetails
+      );
+      console.log("Order placed successfully:", response.data);
+      clearCart();
+      router.push("/orders");
+    } catch (error) {
+      console.error("Error placing cash order:", error.response.data);
+      // Handle error appropriately
+    }
   };
 
   return (
@@ -125,13 +173,13 @@ const Page = () => {
               >
                 <td className="ml-7">
                   {/* <div className=" w-100 h-100 relative"> */}
-                    <Image
-                      src={product.img}
-                      width={100}
-                      height={100}
-                      alt=""
-                      className="ml-10"
-                    />
+                  <Image
+                    src={product.img}
+                    width={100}
+                    height={100}
+                    alt=""
+                    className="ml-10 "
+                  />
                   {/* </div> */}
                 </td>
 
@@ -169,18 +217,15 @@ const Page = () => {
       <div className="lg:hidden flex align-middle justify-center flex-1 w-screen leading-7 pageMargin mt-28 border-0">
         <table className="flex flex-col -m-12">
           {cartItems.map((product) => (
-            <tr
-              className="flex flex-col text-center"
-              key={product.id}
-            >
+            <tr className="flex flex-col text-center" key={product.id}>
               <td className="mx-auto">
-                  <Image
-                    src={product.img}
-                    width={100}
-                    height={100}
-                    alt="pizza image"
-                    className="w-44 md:w-6 "
-                  />
+                <Image
+                  src={product.img}
+                  width={100}
+                  height={100}
+                  alt="pizza image"
+                  className="w-44 md:w-6 "
+                />
               </td>
 
               <td>
@@ -256,12 +301,12 @@ const Page = () => {
                       <input
                         type="text"
                         placeholder="John Doe"
-                        name="name"
+                        name="customer"
                         className="border-2 border-gray-400 rounded-md text-sm lg:text-base text-black"
                         onChange={handleInputChange}
                       ></input>
 
-                      <label className="text-sm md:text-lg text-black">
+                      {/* <label className="text-sm md:text-lg text-black">
                         Phone Number
                       </label>
                       <input
@@ -270,7 +315,7 @@ const Page = () => {
                         name="number"
                         className="border-2 border-gray-400 rounded-md text-sm lg:text-base text-black"
                         onChange={handleInputChange}
-                      ></input>
+                      ></input> */}
 
                       <label className="text-sm md:text-lg text-black">
                         Address
@@ -278,6 +323,7 @@ const Page = () => {
                       <textarea
                         type="text"
                         placeholder="10 John street"
+                        name="address"
                         rows={4}
                         className="border-2 border-gray-400 rounded-md h-24 md:h-32 text-sm lg:text-base text-black"
                         onChange={handleInputChange}
@@ -297,15 +343,76 @@ const Page = () => {
               )}
 
               {/* Uncomment the following code if you want to include PayPal integration */}
-              
-               <PayPalScriptProvider options={initialOptions} >
-                  <PayPalPayment />
-               </PayPalScriptProvider>
+
+              <PayPalScriptProvider
+                options={{
+                  "client-id":
+                    "AYeX3NUN2fiJUeyAtI1SIIGSYTDc5priT_Sqx8MeLPiA89-AoSaQqXLY1FqOSwxAlFahPCCZhzus7ktx",
+                  currency: "USD",
+                  components: "buttons",
+                  intent: "capture",
+                  "disable-funding": "credit,card,p24",
+                }}
+              >
+                <PayPalButtons
+                  style={{ layout: "vertical" }}
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            currency_code: "USD",
+                            value: calculateSubtotal(cartItems),
+                          },
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={(data, actions) => {
+                    return actions.order
+                      .capture()
+                      .then(async function (details) {
+                        console.log("Payment successful:", details);
+
+                        // Extract relevant information from the PayPal response
+                        const { purchase_units } = details;
+                        const { shipping } = purchase_units[0];
+
+                        // Prepare the order details
+                        const orderDetails = {
+                          customer: shipping.name.full_name, // Assuming 'title' corresponds to the customer's name
+                          address: shipping.address.address_line_1,
+                          total: parseFloat(calculateSubtotal(cartItems)), // Convert subtotal to a float
+                          status: 0,
+                          method: 1, // Set the method to 1 for card payment
+                          // Add any other necessary fields
+                        };
+
+                        try {
+                          const response = await axios.post(
+                            "https://pizza-ordering-anno.onrender.com/api/orders",
+                            orderDetails
+                          );
+                          clearCart();
+
+                          // Redirect the user to the orders page
+                          router.push("/orders");
+                        } catch (error) {
+                          console.error(
+                            "Error placing order:",
+                            error.response.data
+                          );
+                          // Handle error appropriately
+                        }
+                      });
+                  }}
+                />
+              </PayPalScriptProvider>
             </div>
           ) : (
             <button
               onClick={() => setOpen(true)}
-              className="mt-10 bg-yellow-500 py-2 md:py-3 w-44 md:w-72 lg:w-80 mx-auto rounded-3xl font-extrabold lg:text-xl cursor-pointer"
+              className="mt-10 bg-yellow-500 py-2 md:py-3 w-44 md:w-72 lg:w-80 mx-auto rounded-3xl font-extrabold text-sm lg:text-xl cursor-pointer"
             >
               CHECKOUT NOW!
             </button>

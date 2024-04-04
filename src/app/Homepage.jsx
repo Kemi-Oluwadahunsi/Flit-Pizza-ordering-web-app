@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import { FaCartShopping } from "react-icons/fa6";
 import Specials from "/src/app/Specials";
@@ -15,37 +15,36 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { useRouter } from "next/navigation";
+import { ProductsContext } from "../../ProductContext";
 
- const settings = {
-   dots: true,
-   infinite: true,
-   slidesToShow: 3,
-   slidesToScroll: 1,
-   autoplay: true,
-   speed: 3000,
-   autoplaySpeed: 3000,
-   cssEase: "linear",
-   responsive: [
-     {
-       breakpoint: 768, // for tablets and small screens
-       settings: {
-         slidesToShow: 2,
-         slidesToScroll: 1,
-       },
-     },
-     {
-       breakpoint: 500, // for mobile
-       settings: {
-         slidesToShow: 1,
-         slidesToScroll: 1,
-       },
-     },
-   ],
- };
+const settings = {
+  dots: true,
+  infinite: true,
+  slidesToShow: 3,
+  slidesToScroll: 1,
+  autoplay: true,
+  speed: 3000,
+  autoplaySpeed: 3000,
+  cssEase: "linear",
+  responsive: [
+    {
+      breakpoint: 768, // for tablets and small screens
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 500, // for mobile
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      },
+    },
+  ],
+};
 
-
-const TestimonialsSlider = ({ testimonials }) => { 
-
+const TestimonialsSlider = ({ testimonials }) => {
   return (
     <section className="py-10" style={{ overflow: "hidden" }}>
       <Slider {...settings}>
@@ -64,15 +63,16 @@ const TestimonialsSlider = ({ testimonials }) => {
   );
 };
 
-function Homepage({ setClose, pproducts }) {
-  const [products, setProducts] = useState(pproducts);
-  const router = useRouter()
+function Homepage({ setClose }) {
+  const { products, loading } = useContext(ProductsContext);
+  const productsDisplayed = products.slice(0, 3);
+  const router = useRouter();
 
   const handleClick = () => {
-    router.push('/products');
-  }
+    router.push("/products");
+  };
 
-  const Cadd = products.map((item) => (
+  const Cadd = productsDisplayed.map((item) => (
     <Link key={item._id} href={`/products/${item._id}`} passHref>
       <Specials
         id={item._id}
@@ -103,9 +103,11 @@ function Homepage({ setClose, pproducts }) {
                 Lorem Ipsum is simply dummy text of the printing and typesetting
                 industry.
               </h4>
-              <button className="bg-yellow-500 lg:text-lg text-white flex flex-row text-center  px-2 lg:px-8  gap-1  py-2 lg:py-4 mt-4  rounded-full w-36 lg:w-56">
+              <button className="bg-yellow-500 lg:text-lg text-white flex flex-row text-center  px-2 lg:px-8  gap-1  py-2 lg:py-4 mt-4  rounded-full w-36 lg:w-56 hover:bg-yellow-400 transition-all duration-300 ease-in-out">
                 <FaCartShopping className=" mt-1 mx-auto" />
-                <span className="mx-auto" onClick={handleClick}>ORDER NOW</span>
+                <span className="mx-auto" onClick={handleClick}>
+                  ORDER NOW
+                </span>
               </button>
             </div>
           </div>
@@ -175,20 +177,32 @@ function Homepage({ setClose, pproducts }) {
             />
           </div>
         </section>
-        <section className=" px-4 lg:px-10 -mt-5 lg:mt-20 ">
+        <section className=" mb-[5rem] px-4 md:px-10 -mt-5 lg:mt-20  relative ">
           <h4 className="love font-bold text-xl lg:text-2xl pb-1 lg:pb-4">
             Popular Dishes
           </h4>
           <h2 className=" text-3xl lg:text-5xl mt-2 font-extrabold">
             Browse our Menu
           </h2>
+          {loading && <div className="loader mx-auto my-10"></div>}
+          {!loading && (
+            <div className=" mt-7 lg:mt-10 grid grid-rows-1 md:grid-cols-2 lg:grid-cols-3  md:w-11/12  lg:w-full md:mx-auto lg:mx-0 lg:px-6  gap-6 md:gap-5 lg:gap-16">
+              {Cadd}
+            </div>
+          )}
 
-          <div className=" mt-7 lg:mt-10 grid grid-rows-1 md:grid-cols-2 lg:grid-cols-3  md:w-11/12  lg:w-full md:mx-auto lg:mx-0 lg:px-6  gap-6 md:gap-5 lg:gap-16">
-            {Cadd} 
-            
-          </div>
+          {!loading && (
+            <div className="flex justify-center items-center w-full lg:mt-8">
+              <button
+                className="bg-yellow-500 mt-8 lg:text-lg text-white flex  font-bold flex-row text-center  px-2 lg:px-8  py-2 lg:py-4  rounded-full w-36 lg:w-56 hover:bg-yellow-400 transition-all duration-300 ease-in-out"
+                onClick={handleClick}
+              >
+                See All Products
+              </button>
+            </div>
+          )}
         </section>
-        <section className=" py-10 lg:py-20 px-4 lg:px-10 bg-yellow-50 lg:mt-16 h-3/4 ">
+        <section className=" py-10 lg:py-20 px-4 lg:px-10 bg-yellow-50 h-3/4 ">
           <h4 className="love font-bold lg:mb-5 text-xl lg:text-2xl">
             Our Strength
           </h4>

@@ -10,6 +10,7 @@ import axios from "axios";
 const Order = () => {
   const { cartItems } = UsingCart();
 
+
   const statusClass = (index) => {
     const status = 0;
 
@@ -41,19 +42,6 @@ const Order = () => {
         setLoading(false);
       });
 
-    // //Update the fetched data
-    // const updatedPizzaOrder = { ...userDetails, address: "newPizzaAddress" };
-    // ordersApi
-    //   .update(userDetails._id ,updatedPizzaOrder)
-    //   .then((response) => {
-    //     setLoading(false);
-    //     console.log("promise fulfilled updated", response.data);
-    //     setUserDetails(response.data);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error updating order:", error);
-    //     setLoading(false);
-    //   });
   }, []);
 
   const calculateSubtotal = (cartItems) => {

@@ -74,3 +74,55 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
+// cartSlice.js
+
+// import { createSlice } from "@reduxjs/toolkit";
+
+// const initialState = {
+//   cartItems: [],
+//   quantity: 0,
+//   total: 0,
+// };
+
+// const calculateSummary = (cartItems) => {
+//   const quantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+//   const total = cartItems.reduce(
+//     (total, item) => total + item.price * item.quantity,
+//     0
+//   );
+//   return { quantity, total };
+// };
+
+// const cartSlice = createSlice({
+//   name: "cart",
+//   initialState,
+//   reducers: {
+//     addToCart: (state, action) => {
+//       const { id, title, price, quantity } = action.payload;
+//       const existingItem = state.cartItems.find((item) => item.id === id);
+
+//       if (existingItem) {
+//         existingItem.quantity += quantity;
+//       } else {
+//         state.cartItems.push({ id, title, price, quantity });
+//       }
+
+//       const { quantity: newQuantity, total: newTotal } = calculateSummary(
+//         state.cartItems
+//       );
+//       state.quantity = newQuantity;
+//       state.total = newTotal;
+//     },
+//     clearCart: (state) => {
+//       state.cartItems = [];
+//       state.quantity = 0;
+//       state.total = 0;
+//     },
+//   },
+// });
+
+// export const { addToCart, clearCart } = cartSlice.actions;
+
+// export default cartSlice.reducer;

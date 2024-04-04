@@ -5,6 +5,32 @@
 *{
   box-sizing: border-box;
 }
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(138, 41, 41);
+  box-shadow: 0 0 0 0 #0004;
+  animation: l2 1.5s infinite linear;
+  position: relative;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 0 #0004;
+  animation: inherit;
+  animation-delay: -0.5s;
+}
+.loader:after {
+  animation-delay: -1s;
+}
+@keyframes l2 {
+    100% {box-shadow: 0 0 0 40px #0000}
+}
 
 
 .pizza-background{
@@ -82,12 +108,14 @@
 }
 
 @media screen and (min-width:440px) and (max-width: 767px) {
-  .fixCart{
+  /* .fixCart{
     right: 6rem;
-  }
+  } */
 
-  .fixMenu{
+  /* .fixMenu{
     left: 25rem;
-  }
+  } */
 }
+
+
 

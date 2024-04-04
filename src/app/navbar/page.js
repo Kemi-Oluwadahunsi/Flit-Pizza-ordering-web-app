@@ -47,13 +47,16 @@ const Navbar = () => {
             className="ml-4 lg:ml-2  lg:w-4/6 lg:h-28"
           />
         </div>
-        <div className="lg:hidden relative w-10 h-10 top-2 left-[9rem] sm:left-60 md:left-72 flex items-center">
-          <button
-            onClick={toggleMobileContent}
-            className="text-black underline text-3xl md:text-4xl fixMenu"
-          >
-            {showMobileContent ? <FaTimes /> : <CgMenu />}
-          </button>
+
+        <div className="lg:hidden relative h-10 top-2 left-[9rem] flex items-center md:ml-24 ">
+          <div className="">
+            <button
+              onClick={toggleMobileContent}
+              className="text-black underline text-3xl md:text-4xl fixMenu"
+            >
+              {showMobileContent ? <FaTimes /> : <CgMenu />}
+            </button>
+          </div>
         </div>
 
         <div className="lg:col-span-3 flex w-screen lg:w-full lg:flex-row">
@@ -63,22 +66,34 @@ const Navbar = () => {
             }  lg:flex flex-col lg:flex-row fixed lg:relative pt-40 lg:pt-0 lg:py-0 z-50 lg:z-0 w-screen lg:w-full h-screen lg:h-20 text-md md:text-lg lg:text-sm bg-red-600 lg:bg-transparent lg:justify-end items-center text-white lg:text-black font-bold gap-14 `}
           >
             <Link href="/" passHref className="">
-              <li className="cursor-pointer" onClick={closeMobileContent}>
+              <li
+                className="cursor-pointer lg:hover:underline underline-offset-4 decoration-yellow-500 decoration-4 transition-all duration-300 ease-in-out"
+                onClick={closeMobileContent}
+              >
                 HOME
               </li>
             </Link>
             <Link href="../products" passHref>
-              <li className="cursor-pointer" onClick={closeMobileContent}>
+              <li
+                className="cursor-pointer lg:hover:underline underline-offset-4 decoration-yellow-500 decoration-4 transition-all duration-300 ease-in-out"
+                onClick={closeMobileContent}
+              >
                 PRODUCTS
               </li>
             </Link>
             <Link href="../blog" passHref>
-              <li className="cursor-pointer" onClick={closeMobileContent}>
+              <li
+                className="cursor-pointer lg:hover:underline underline-offset-4 decoration-yellow-500 decoration-4 transition-all duration-300 ease-in-out"
+                onClick={closeMobileContent}
+              >
                 BLOG
               </li>
             </Link>
             <Link href="../contact" passHref>
-              <li className="cursor-pointer" onClick={closeMobileContent}>
+              <li
+                className="cursor-pointer lg:hover:underline underline-offset-4 decoration-yellow-500 decoration-4 transition-all duration-300 ease-in-out"
+                onClick={closeMobileContent}
+              >
                 CONTACTS
               </li>
             </Link>
@@ -87,7 +102,7 @@ const Navbar = () => {
 
           <div
             onClick={navigateToCart}
-            className="fixCart flex  flex-row fixed lg:absolute flex-grow items-end lg:pt-8 lg:items-center right-16 lg:right-5  top-4 lg:top-0 md:mr-10 lg:mr-5  md:ml-96 lg:ml-4"
+            className="fixCart flex  flex-row fixed lg:absolute lg:flex-grow items-end lg:pt-8 lg:items-center lg:right-5  top-4 lg:top-0 md:mr-10 lg:mr-5 sm:left-[17rem] md:left-[30rem] lg:ml-4 md:w-[100%]"
           >
             <FaCartShopping className="text-blue-500 cursor-pointer text-xl md:text-2xl  ml-2 lg:text-3xl" />
             <span

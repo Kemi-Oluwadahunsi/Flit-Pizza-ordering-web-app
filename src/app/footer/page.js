@@ -10,7 +10,7 @@ import Link from 'next/link';
 const Footer = () => {
   return (
     <>
-      <section className="grid  bg-yellow-50   grid-cols-2 lg:grid-cols-4  px-10  lg:px-11 py-7 lg:py-16">
+      <section className="grid  bg-yellow-50   grid-cols-2 lg:grid-cols-4  px-10 footer lg:px-11 py-7 lg:py-16">
         <section>
           <h5 className="font-bold text-md lg:text-xl mb-2 lg:mb-5">
             INFORMATION

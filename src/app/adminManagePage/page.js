@@ -1,19 +1,21 @@
-"use client"
+"use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import axios from "axios";
 import styles from "./newItem.module.css";
 // import { useRouter } from "next/router";
 import { createProduct } from "@/app/products/page";
 import Link from "next/link";
+import { ProductsContext } from "../../../ProductContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const OrdersSection = (props) => {
   const { id, customer, address, total, status, method } = props;
-  
+
   return (
     <>
-      
       <tbody className="text-sm md:text-base border-t border-b border-gray-300">
         <tr className="border-t border-b border-gray-300 text-xs md:text-base">
           <td className="py-2">{id.slice(0, 6)}...</td>
@@ -33,33 +35,10 @@ const OrdersSection = (props) => {
 };
 
 const AdminPage = () => {
-  const [orders, setOrders] = useState([]);
-  const [products, setProducts] = useState([]);
-  // const [isLoading, setLoading] = useState(true);
+  const { products, setProducts, orders, loading } =
+    useContext(ProductsContext);
 
-  useEffect(() => {
-    axios
-      .get("https://pizza-ordering-anno.onrender.com/api/orders")
-      .then((response) => {
-        setLoading(false);
-        console.log("promise fulfilled", response.data);
-        setOrders(response.data);
-      });
-
-    axios
-      .get("https://pizza-ordering-anno.onrender.com/api/products")
-      .then((response) => {
-        setLoading(false);
-        console.log("promise fulfilled", response.data);
-        setProducts(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      });
-  }, []);
   const [isAddNewPopupVisible, setIsAddNewPopupVisible] = useState(false);
-  const [isLoading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
@@ -98,6 +77,19 @@ const AdminPage = () => {
     setDescription(e.target.value);
   };
 
+  const handleDeleteProduct = async (productId) => {
+    try {
+      if (window.confirm("Are you sure you want to delete this product?")) {
+        await axios.delete(
+          `https://pizza-ordering-anno.onrender.com/api/products/${productId}`
+        );
+        console.log("Product deleted successfully.");
+        setProducts(products.filter((product) => product._id !== productId));
+      }
+    } catch (error) {
+      toast.error("Error deleting product:", error.message);
+    }
+  };
   const handleCreatePizza = async (e) => {
     e.preventDefault();
 
@@ -112,11 +104,14 @@ const AdminPage = () => {
 
       console.log("New Pizza Object:", newPizzaObject);
 
-      const createdPizza = await createProduct(newPizzaObject);
+      const response = await axios.post(
+        "https://pizza-ordering-anno.onrender.com/api/products",
+        newPizzaObject
+      );
 
-      console.log("Created Pizza:", createdPizza);
+      console.log("Created Pizza:", response.data);
 
-      setProducts([...products, createdPizza]);
+      // setProducts([...products, response.data]);
 
       // Clear form fields
       setTitle("");
@@ -126,6 +121,7 @@ const AdminPage = () => {
       setOptions([]);
     } catch (error) {
       console.error("Error creating pizza:", error.message);
+      toast.error("Error creating pizza:", error.message);
     }
   };
 
@@ -256,7 +252,11 @@ const AdminPage = () => {
                 Close
               </button>
 
-              <button type="submit" className={styles.addButton}>
+              <button
+                type="submit"
+                className={styles.addButton}
+                onClick={handleCreatePizza}
+              >
                 Create Pizza
               </button>
             </div>
@@ -284,44 +284,51 @@ const AdminPage = () => {
                 </tr>
               </thead>
 
-              {products.map((product) => (
-                <tbody
-                  className="border-t border-b border-gray-300"
-                  key={product._id}
-                >
-                  {
-                    <tr className="">
-                      <td className="">
-                        <Image
-                          src={product.img}
-                          width={100}
-                          height={70}
-                          objectFit="cover"
-                          alt="Pizza-Image"
-                          className="w-12 h-12 md:w-16 lg:w-20 md:h-16 lg:h-20 flex align-self-start"
-                        />
-                      </td>
-                      <td className="pb-10 text-xs md:text-base justify-self-start">
-                        {product._id}
-                      </td>
-                      <td className="pb-10 text-xs md:text-base">
-                        Burga Pizza
-                      </td>
-                      <td className="pb-10 text-xs md:text-base">
-                        {product.prices[0]}
-                      </td>
-                      <td className="pb-10 text-xs md:text-base">
-                        <button className="bg-green-700 py-1 px-2 text-white text-xs md:text-base cursor-pointer">
-                          Edit
-                        </button>
-                        <button className="ml-3 bg-red-600 py-1 px-2 text-white text-xs md:text-base cursor-pointer">
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  }
-                </tbody>
-              ))}
+              {loading ? (
+                <div className="loader mx-auto my-10"></div>
+              ) : (
+                products.map((product) => (
+                  <tbody
+                    className="border-t border-b border-gray-300"
+                    key={product._id}
+                  >
+                    {
+                      <tr className="">
+                        <td className="">
+                          <Image
+                            src={product.img}
+                            width={100}
+                            height={70}
+                            objectFit="cover"
+                            alt="Pizza-Image"
+                            className="w-12 h-12 md:w-16 lg:w-20 md:h-16 lg:h-20 flex align-self-start"
+                          />
+                        </td>
+                        <td className="pb-10 text-xs md:text-base justify-self-start">
+                          {product._id}
+                        </td>
+                        <td className="pb-10 text-xs md:text-base">
+                          {product.title}
+                        </td>
+                        <td className="pb-10 text-xs md:text-base">
+                          {product.prices[0]}
+                        </td>
+                        <td className="pb-10 text-xs md:text-base">
+                          <button className="bg-green-700 py-1 px-2 text-white text-xs md:text-base cursor-pointer">
+                            Edit
+                          </button>
+                          <button
+                            className="ml-3 bg-red-600 py-1 px-2 text-white text-xs md:text-base cursor-pointer"
+                            onClick={() => handleDeleteProduct(product._id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                ))
+              )}
             </table>
           </div>
         </div>
@@ -341,8 +348,8 @@ const AdminPage = () => {
                   <th className="text-start">Action</th>
                 </tr>
               </thead>
-              {isLoading ? (
-                <div>loading...</div>
+              {loading ? (
+                <div className="loader mx-auto my-10"></div>
               ) : (
                 orders.map((order) => (
                   <OrdersSection
@@ -360,6 +367,9 @@ const AdminPage = () => {
             </table>
           </div>
         </div>
+      </div>
+      <div className="z-[10000] pt-[20em]">
+        <ToastContainer position="top-right" autoClose={5000} />
       </div>
     </div>
   );

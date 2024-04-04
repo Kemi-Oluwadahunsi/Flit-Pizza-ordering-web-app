@@ -6,7 +6,7 @@ const Testimonials = (props) => {
     return (
       <>
         <div className=''>
-          <div className=" border-2 border-gray-300 p-6  rounded-lg mx-2 cursor-pointer  ">
+          <div className=" lg:w-[80%] border-2 border-gray-300 p-6  rounded-lg mx-2 cursor-pointer  ">
             <a href={props.linked} target="_blank" rel="noopener noreferrer">
               <section className="bg-white grid lg:grid-rows-2 mb-4 rounded-lg">
                 <div className=" place-self-center">
