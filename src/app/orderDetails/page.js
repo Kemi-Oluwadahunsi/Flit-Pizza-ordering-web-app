@@ -1,3 +1,4 @@
+'use client'
 import { useState } from "react";
 import styles from "../styles/OrderDetail.module.css";
 
