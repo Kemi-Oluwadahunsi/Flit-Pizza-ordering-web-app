@@ -52,7 +52,7 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
   };
 
   return (
-    <>
+    <div className="max-w-[1600px] mx-auto">
       <section className="pageMargin">
         <section className="flex flex-1 flex-col lg:flex-row lg:gap-10 mx-auto px-4 lg:px-[10em] mt-32 lg:mt-10">
           <section className="h-full align-middle justify-center ">
@@ -182,6 +182,6 @@ export const ProductContent = ({ title, img, prices, desc, extraOptions }) => {
           <ToastContainer position="top-right" autoClose={5000} />
         </div>
       </section>
-    </>
+    </div>
   );
 };
