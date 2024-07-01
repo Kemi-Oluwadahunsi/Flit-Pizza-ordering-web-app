@@ -50,7 +50,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center max-w-[1600px] mx-auto">
       <div className="w-full md:max-w-xl p-8 bg-gray-200 shadow-lg border rounded-md lg:z-50 mt-20 lg:mt-12">
         <h2 className="text-3xl font-bold mb-6">Contact Us</h2>
         <form ref={formRef} onSubmit={sendEmail} className="space-y-4">
