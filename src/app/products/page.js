@@ -62,7 +62,7 @@ export default function Products() {
   ));
 
   return (
-    <>
+    <div className="max-w-[1600px] mx-auto">
       <section className=" pt-60  flex sm:flex-col-reverse lg:flex-row items-center  md:justify-between w-full md:px-7 lg:px-10 sm:px-4 pb-10 justify-around gap-[1em] lg:gap-[2em] ">
         <div className="lg:w-[30%]">
           <div className="place-self-center lg:place-self-start">
@@ -150,7 +150,7 @@ export default function Products() {
           </div>
         )}
       </section>
-    </>
+    </div>
   );
 }
 
