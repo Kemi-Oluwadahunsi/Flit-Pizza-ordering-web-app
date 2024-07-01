@@ -85,7 +85,7 @@ function Homepage({ setClose }) {
   ));
 
   return (
-    <>
+    <div className="max-w-[1600px] mx-auto">
       <section className="overflow-x-hidden">
         <main className="grid grid-rows-2 lg:grid-cols-5 mt-16 lg:mt-0 justify-items-center h-[30rem] lg:h-mainHeight w-screen lg:w-full  lg:pt-36">
           <div className="lg:col-span-3 px-4 lg:pl-10  flex items-start">
@@ -270,7 +270,7 @@ function Homepage({ setClose }) {
           <TestimonialsSlider testimonials={TestsArray} />
         </section>
       </section>
-    </>
+    </div>
   );
 }
 
