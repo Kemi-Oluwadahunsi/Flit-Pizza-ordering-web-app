@@ -6,7 +6,7 @@ import { TfiPencilAlt } from "react-icons/tfi";
 
 const BlogPage = () => {
   return (
-    <div className="pageMargin  pb-20">
+    <div className="pageMargin max-w-[1600px] mx-auto pb-20">
       <div className="flex flex-col lg:flex-row justify-evenly lg:mt-0 mt-20 mx-3 lg:mx-24 gap-14">
         <div className="flex-1">
           <h1 className=" text-2xl lg:text-4xl font-extrabold ">
