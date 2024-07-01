@@ -126,7 +126,7 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="pageMargin">
+    <div className="pageMargin max-w-[1600px] mx-auto">
       <div className="ml-10 mb-10">
         <button
           onClick={() => setIsAddNewPopupVisible(true)}
