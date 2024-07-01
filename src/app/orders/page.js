@@ -56,7 +56,7 @@ const Order = () => {
     return calculateSubtotal(cartItems);
   };
   return (
-    <>
+    <div className="max-w-[1600px] mx-auto">
       <div className=" flex-col-reverse  lg:flex-row flex pageMargin">
         <div className=" pt-4 lg:pt-0 flex flex-col lg:flex-row lg:flex-grow lg:flex-wrap lg:w-2/5 text-left">
           <div className="hidden lg:flex w-full ml-7 pt-7">
@@ -195,7 +195,7 @@ const Order = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
