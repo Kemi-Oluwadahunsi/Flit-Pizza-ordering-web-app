@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="py-2 lg:px-8 h-28 fixed grid bg-white z-50  grid-cols-2 lg:grid-cols-5 w-full ">
+      <header className="py-2 lg:px-8 h-28 fixed grid bg-white z-50  grid-cols-2 lg:grid-cols-5 w-full max-w-[1600px] mx-auto ">
         <div className="lg:col-span-2 grid grid-cols-2">
           <Image
             src="/images/pizza-logo_afsvzn.png"
