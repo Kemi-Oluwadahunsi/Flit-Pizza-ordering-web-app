@@ -95,37 +95,6 @@ const Page = () => {
   // const dispatch = useDispatch();
   const router = useRouter();
 
-  // const cashOrder = async () => {
-  //   // const totalCashOnDelivery = cartItems.reduce(
-  //   //   (total, product) => total + product.price * product.quantity,
-  //   //   0
-  //   // );
-
-  //   const totalCashOnDelivery = calculateSubtotal(cartItems);
-  //   // Prepare order details
-  //   const orderDetails = {
-  //     customer: userDetails.customer,
-  //     address: userDetails.address,
-  //     total: totalCashOnDelivery,
-  //     status: 0,
-  //     method: 0,
-  //     // Add any other necessary fields
-  //   };
-  //   try {
-  //     // Post order details to the backend
-  //     const response = await postOrder(orderDetails);
-
-  //     // Clear the cart after successful order placement
-  //     clearCart();
-
-  //     // Navigate to the orders page
-  //     router.push("/orders");
-  //   } catch (error) {
-  //     console.error("Error placing cash order:", error.response.data);
-  //     // Handle error appropriately
-  //   }
-  // };
-
   const cashOrder = async () => {
     const totalCashOnDelivery = calculateSubtotal(cartItems);
     const orderDetails = {
@@ -151,7 +120,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex pageMargin flex-col lg:flex-row mx-auto lg:m-0">
+    <div className="flex pageMargin flex-col lg:flex-row mx-auto lg:m-0 max-w-[1600px] mx-auto">
       <div className="hidden lg:table flex-grow h-36 pt-6 w-5/10">
         <table className="w-full">
           <thead className="">
